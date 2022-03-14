@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <title><%= title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+<header>
+    <%= require('html-loader!./layout/header.html').default %>
+</header>
+<main>
+    <%= pageContent %>
+</main>
+<footer>
+    <%= require('html-loader!./layout/footer.html').default %>
+</footer>
+</body>
+</html>
