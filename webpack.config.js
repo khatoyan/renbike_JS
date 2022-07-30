@@ -23,10 +23,8 @@ const pages = [
     new HtmlWebpackPlugin({
       filename: row.filename,
       template: row.path,
-      inject: true,
-      templateParameters: () => ({
-        title: row.title,
-      }),
+      inject: "body",
+      title: row.title,
     })
 );
 
@@ -82,6 +80,9 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
   ].concat(pages),
+  performance: {
+    hints: false,
+  },
   devServer: {
     port: 3000,
     hot: false,
