@@ -1,18 +1,16 @@
 <%= require('../includes/header.html').default %>
 
-  <div class="app__content">
-    <section class="landing">
-      <h1 class="landing__title">Сервис аренды велосипедов</h1>
-      <p class="landing__subtitle">240 велосипедов в Новосибирске</p>
-      <div class="landing__actions">
-        <a href="./catalog.html" class="button landing__action-button">Выбрать велосипед</a>
-        <a href="#map-page">Пункты проката</a>
-      </div>
-    </section>
-    <section class="map">
-      <h2 class="map__title" id="map-page">Пункты проката</h2>
-      <a href="./catalog.html" class="map__widget"><img src="../../images/map.png" alt="map"></a>
-    </section>
-  </div>
+  <section class="landing">
+    <h1 class="landing__title">Сервис аренды велосипедов</h1>
+    <p class="landing__subtitle">240 велосипедов в Новосибирске</p>
+    <div class="landing__actions">
+      <a href="./catalog.html" class="button landing__action-button">Выбрать велосипед</a>
+      <a href="#map-page">Пункты проката</a>
+    </div>
+  </section>
+  <section class="map">
+    <h2 class="map__title" id="map-page">Пункты проката</h2>
+    <a href="./catalog.html" class="map__widget"><img src="../../images/map.png" alt="map"></a>
+  </section>
 
   <%= require('../includes/footer.html').default %>
