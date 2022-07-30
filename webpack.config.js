@@ -1,32 +1,90 @@
-const fs = require('fs');
-const path = require('path');
+const path = require("path");
+const fs = require("fs");
+const webpack = require("webpack");
+const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const directory = path.resolve(__dirname, 'build');
+const dist = path.resolve(__dirname, "dist");
 
 const pages = [
-    {filename: 'index.html', content: './pages/index.html', title: 'Homepage'},
-    {filename: 'inner.html', content: './pages/inner.html', title: 'Inner page'},
-].map(row => new HtmlWebpackPlugin({
-    ...row,
-    template: './pages/_layout.html',
-    inject: 'body',
-    templateParameters: () =>
-        ({pageContent: fs.readFileSync(row.content, 'utf8'), title: row.title})
-}));
+  {
+    filename: "index.html",
+    path: "./src/html/pages/index.html",
+    title: "Rent Bike | Добро пожаловать",
+  },
+  {
+    filename: "catalog.html",
+    path: "./src/html/pages/catalog.html",
+    title: "Rent Bike | Каталог",
+  },
+].map(
+  (row) =>
+    new HtmlWebpackPlugin({
+      filename: row.filename,
+      template: row.path,
+      inject: true,
+      templateParameters: () => ({
+        title: row.title,
+      }),
+    })
+);
 
 module.exports = {
-    entry: './src/index.js',
-    output: {
-        path: directory,
-    },
-    plugins: pages,
-    devServer: {
-        static: {
-            directory,
+  entry: ["./src/js/index.js", "./src/styles/main.css"],
+  output: {
+    path: dist,
+    filename: "js/bundle.js",
+  },
+  devtool: "source-map",
+  mode: "production",
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        include: path.resolve(__dirname, "./src/styles"),
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {},
+          },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+              url: false,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.html$/,
+        include: path.resolve(__dirname, "src/html/includes"),
+        use: ["raw-loader"],
+      },
+    ],
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/style.bundle.css",
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: "src/favicon.ico",
+          to: "favicon.ico",
         },
-        compress: true,
-        port: 3000,
-    },
-    mode: "development"
-}
+        {
+          from: "src/images",
+          to: "images",
+        },
+      ],
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+  ].concat(pages),
+  devServer: {
+    port: 3000,
+    hot: false,
+    liveReload: true,
+  },
+};
