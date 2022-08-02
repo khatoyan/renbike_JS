@@ -1,9 +1,8 @@
 import { app } from "./app";
 import { api } from "./api";
 
-document.addEventListener("DOMContentLoaded", async () => {
-  await init();
-  bindings();
+document.addEventListener("DOMContentLoaded", () => {
+  init();
 });
 
 async function init() {
@@ -17,16 +16,22 @@ async function init() {
   showAuthorizedUserPanel(res.value.login);
 }
 
-const showUnauthorizedUserPanel = () => {
+function showUnauthorizedUserPanel() {
   document.getElementById("user-panel-unauthorized").removeAttribute("hidden");
-};
+  initListeners();
+}
 
-const showAuthorizedUserPanel = (login) => {
+function hideUnauthorizedUserPanel() {
+  document.getElementById("user-panel-unauthorized").setAttribute("hidden", "");
+  initListeners();
+}
+
+function showAuthorizedUserPanel(login) {
   document.getElementById("user-panel-login").textContent = login;
   document.getElementById("user-panel-authorized").removeAttribute("hidden");
-};
+}
 
-function bindings() {
+function initListeners() {
   document
     .getElementById("btn-open-modal-login")
     .addEventListener("click", () => {
@@ -48,6 +53,8 @@ function bindings() {
       return;
     }
 
-    document.location.reload();
+    hideUnauthorizedUserPanel();
+    showAuthorizedUserPanel(res.value.login);
+    app.closeModal("modal-login");
   });
 }
