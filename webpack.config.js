@@ -32,7 +32,6 @@ module.exports = {
   entry: ["./src/js/index.js", "./src/styles/main.css"],
   output: {
     path: dist,
-    filename: "js/bundle.js",
   },
   devtool: "source-map",
   mode: "production",
@@ -87,5 +86,11 @@ module.exports = {
     port: 3000,
     hot: false,
     liveReload: true,
+    proxy: {
+      "/v1": {
+        target: "http://localhost:3010",
+        pathRewrite: { "^/v1": "" },
+      },
+    },
   },
 };

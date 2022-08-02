@@ -13,10 +13,99 @@
 <body>
   <div class="app">
 
-    <header class="app__header">
+    <div class="modal" id="modal-login">
+      <div data-control="modal-background" class="modal__background"></div>
+      <div class="modal__content">
+        <header class="modal__title">
+          <h2>Вход</h2>
+          <div data-control="modal-btn-close"><img src="../../images/close.svg" alt="close"></div>
+        </header>
+        <form id="auth-form" class="form">
+          <div class="form__row">
+            <label class="form__label" for="login-email">Электронная почта</label>
+            <input type="email" class="form__input input" name="login-email" required>
+          </div>
+          <div class="form__row">
+            <label class="form__label" for="login-password">Пароль</label>
+            <input type="password" class="form__input input" name="login-password" required>
+          </div>
+          <div class="form__row">
+            <button id="btn-login" type="submit" class="button button--wide button--large">Войти</button>
+          </div>
+          <div class="form__row form__row--center">
+            <a href="#modal-registration">Зарегистрироваться</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="modal-registration">
+      <div data-control="modal-background" class="modal__background"></div>
+      <div class="modal__content">
+        <header class="modal__title">
+          <h2>Регистрация</h2>
+          <div data-control="modal-btn-close"><img src="../../images/close.svg" alt="close"></div>
+        </header>
+        <form action="" class="form">
+          <div class="form__row">
+            <label class="form__label" for="reg-email">Электронная почта</label>
+            <input type="email" class="form__input input" id="reg-email" required>
+          </div>
+          <div class="form__row">
+            <label class="form__label" for="reg-password1">Пароль</label>
+            <input type="password" class="form__input input" id="reg-password1" required>
+            <label class="form__label form__label--hint" for="reg-password1">Минимум 8 символов</label>
+          </div>
+          <div class="form__row">
+            <label class="form__label" for="reg-password2">Повторите пароль</label>
+            <input type="password" class="form__input input" id="reg-password2" required>
+          </div>
+          <div class="form__row">
+            <a href="#modal-card" class="button button--wide button--large">Зарегистрироваться</a>
+          </div>
+          <div class="form__row form__row--center">
+            <a href="#modal-login">Войти</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="modal-card">
+      <div data-control="modal-background" class="modal__background"></div>
+      <div class="modal__content">
+        <header class="modal__title">
+          <h2>Реквизиты карты</h2>
+          <div data-control="modal-btn-close"><img src="../../images/close.svg" alt="close"></div>
+        </header>
+        <form action="" class="form">
+          <div class="form__row">
+            <label class="form__label" for="card-number">Номер карты</label>
+            <input type="text" class="form__input input" id="card-number" required placeholder="0000 0000 0000 0000">
+          </div>
+          <div class="form__row form__row--col">
+            <div class="form__col">
+              <label class="form__label" for="card-date">Срок</label>
+              <input type="month" class="form__input input" id="card-date" required placeholder="ММ/ГГ">
+            </div>
+            <div class="form__col">
+              <label class="form__label" for="card-cvv">CVV</label>
+              <input type="password" class="form__input input" id="card-cvv" required placeholder="•••" maxlength="3">
+            </div>
+          </div>
+          <div class="form__row">
+            <button type="submit" class="button button--wide button--large" disabled>Привязать карту</button>
+          </div>
+          <div class="form__row form__row--center">
+            <a href="./catalog.html">Привязать потом</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <header class="app__header" id="user-panel">
       <div class="header app__content">
         <a href="./index.html"><img src="../../images/logo.svg" alt="logo"></a>
-        <a href="#modal-login" class="button header__button">Войти</a>
+        <button class="button header__button" id="btn-open-modal-login">Войти</button>
         <a href="#modal-registration" class="button button--light header__button">Регистрация</a>
       </div>
 

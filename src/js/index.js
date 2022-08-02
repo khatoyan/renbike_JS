@@ -1,16 +1,4 @@
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
-console.log(1);
+import { app } from "./app";
+import "./header";
+
+app.init();
