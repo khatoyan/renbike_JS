@@ -1,4 +1,2 @@
-import { app } from "./app";
-import "./header";
-
-app.init();
+export { api } from "./api";
+export { app } from "./app";

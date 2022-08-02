@@ -29,7 +29,19 @@ const pages = [
 );
 
 module.exports = {
-  entry: ["./src/js/index.js", "./src/styles/main.css"],
+  entry: {
+    main: {
+      import: ["./src/js/index.js", "./src/styles/main.css"],
+      library: {
+        name: "app",
+        type: "assign",
+      },
+    },
+    header: {
+      dependOn: "main",
+      import: "./src/js/modules/header.js",
+    },
+  },
   output: {
     path: dist,
   },

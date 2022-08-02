@@ -1,5 +1,5 @@
-import { app } from "./app";
-import { api } from "./api";
+import { app } from "../app";
+import { api } from "../api";
 
 document.addEventListener("DOMContentLoaded", () => {
   init();
