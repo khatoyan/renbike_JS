@@ -12,7 +12,6 @@
   z-index: 1000;
 }
 
-.modal.visible,
 .modal--active {
   display: flex;
 }

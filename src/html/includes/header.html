@@ -102,11 +102,26 @@
       </div>
     </div>
 
-    <header class="app__header" id="user-panel">
+    <header class="app__header">
       <div class="header app__content">
         <a href="./index.html"><img src="../../images/logo.svg" alt="logo"></a>
-        <button class="button header__button" id="btn-open-modal-login">Войти</button>
-        <a href="#modal-registration" class="button button--light header__button">Регистрация</a>
+
+        <div class="header__user-panel" id="user-panel-unauthorized" hidden>
+          <button class="button header__button" id="btn-open-modal-login">Войти</button>
+          <button class="button button--light header__button">Регистрация</button>
+        </div>
+
+        <div class="header__user-panel" id="user-panel-authorized" hidden>
+          <a href="./booking.html" class="header__link">Мои бронирования</a>
+          <div class="dropdown header__link" tabindex="0">
+            <div class="icon-people dropdown__title" id="user-panel-login">Пользователь</div>
+            <div class="dropdown__menu">
+              <a href="./settings.html" class="dropdown__menu-item">Настройки</a>
+              <hr>
+              <a href="#" class="dropdown__menu-item">Выйти</a>
+            </div>
+          </div>
+        </div>
       </div>
 
     </header>

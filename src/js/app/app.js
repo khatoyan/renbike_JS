@@ -14,7 +14,7 @@ class App {
       return;
     }
 
-    modal.classList.remove("visible");
+    modal.classList.remove("modal--active");
   }
 
   openModal(modalId) {
@@ -24,7 +24,7 @@ class App {
       return;
     }
 
-    modal.classList.add("visible");
+    modal.classList.add("modal--active");
 
     modal
       .querySelector('[data-control="modal-background"]')

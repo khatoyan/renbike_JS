@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header__user-panel {
+  margin-left: auto;
+}
+
+.header__button + .header__button {
+  margin-left: calc(var(--m) * 2);
+}
+
+.header__link {
+  margin-left: auto;
+  display: inline-block;
+  color: var(--colorMain);
+}
+
+.header__link + .header__link {
+  margin-left: calc(var(--m) * 6);
+}

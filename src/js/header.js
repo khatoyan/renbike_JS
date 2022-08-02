@@ -1,7 +1,32 @@
 import { app } from "./app";
 import { api } from "./api";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  await init();
+  bindings();
+});
+
+async function init() {
+  const res = await api.getCurrentUser();
+
+  if (res.status === "error") {
+    showUnauthorizedUserPanel();
+    return;
+  }
+
+  showAuthorizedUserPanel(res.value.login);
+}
+
+const showUnauthorizedUserPanel = () => {
+  document.getElementById("user-panel-unauthorized").removeAttribute("hidden");
+};
+
+const showAuthorizedUserPanel = (login) => {
+  document.getElementById("user-panel-login").textContent = login;
+  document.getElementById("user-panel-authorized").removeAttribute("hidden");
+};
+
+function bindings() {
   document
     .getElementById("btn-open-modal-login")
     .addEventListener("click", () => {
@@ -25,4 +50,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.location.reload();
   });
-});
+}

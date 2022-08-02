@@ -1,5 +1,6 @@
 @import url(./normalize.css);
 @import url(./variables.css);
+@import url(./header.css);
 @import url(./modal.css);
 
 *,
@@ -164,30 +165,6 @@ select::placeholder {
   margin-bottom: calc(var(--m) * 1);
 }
 
-/* header */
-.header {
-  display: flex;
-  align-items: center;
-}
-
-.header__button {
-  margin-left: auto;
-}
-
-.header__button + .header__button {
-  margin-left: calc(var(--m) * 2);
-}
-
-.header__link {
-  margin-left: auto;
-  display: inline-block;
-  color: var(--colorMain);
-}
-
-.header__link + .header__link {
-  margin-left: calc(var(--m) * 6);
-}
-
 /* footer */
 .footer {
   display: flex;
@@ -273,7 +250,7 @@ select::placeholder {
   margin-bottom: calc(var(--m) * 2);
 }
 
-.bike-card__preview img {
+.bike-card__preview images {
   width: 100%;
 }
 
@@ -300,12 +277,12 @@ select::placeholder {
 /* icons */
 .icon-people {
   padding-left: calc(var(--m) * 3.5);
-  background: url(../img/people.svg) 0 50% no-repeat;
+  background: url(../images/people.svg) 0 50% no-repeat;
 }
 
 .icon-map {
   padding-left: calc(var(--m) * 3.5);
-  background: url(../img/map.svg) 0 50% no-repeat;
+  background: url(../images/map.svg) 0 50% no-repeat;
 }
 
 /* catalog-header */
@@ -626,7 +603,7 @@ input:checked + .catalog-header__switch {
 .pagination__next {
   margin-left: calc(var(--m) * 2);
   padding-right: calc(var(--m) * 2);
-  background: url(../../project/img/next.svg) 100% 50% no-repeat;
+  background: url(../../project/images/next.svg) 100% 50% no-repeat;
 }
 
 /* form */
