@@ -58,6 +58,10 @@ function initListeners() {
       app.openModal("modal-login");
     });
 
+  document.getElementById("card-form-close").addEventListener("click", () => {
+    app.closeModal("modal-card");
+  });
+
   document.getElementById("auth-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -94,7 +98,30 @@ function initListeners() {
     }
 
     app.closeModal("modal-registration");
+    app.openModal("modal-card");
     hideUnauthorizedUserPanel();
     init();
+    card - form;
+  });
+
+  document.getElementById("card-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = Object.fromEntries(new FormData(e.target));
+
+    const res = await api.updateCurrentUser({
+      cardRequisites: {
+        number: formData["card-number"],
+        date: formData["card-date"],
+        cvv: formData["card-cvv"],
+      },
+    });
+
+    if (res.status === "error") {
+      alert("Ошибка привязки карты");
+      return;
+    }
+
+    app.closeModal("modal-card");
   });
 }

@@ -20,7 +20,7 @@ class API {
   }
 
   async auth({ login, password }) {
-    const body = JSON.stringify({ username: login, password });
+    const body = JSON.stringify({ login, password });
 
     const res = await fetch(apiRoutes.auth, {
       body,
@@ -52,9 +52,24 @@ class API {
       return { status: "error", value: res.status };
     }
 
-    const data = await res.json();
+    return { status: "success" };
+  }
 
-    return { status: "success", value: { login: data.login } };
+  async updateCurrentUser({ login, password, cardRequisites }) {
+    const body = JSON.stringify({ login, password, cardRequisites });
+
+    const res = await fetch(apiRoutes.currentUser, {
+      body,
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      return { status: "error", value: res.status };
+    }
+
+    return { status: "success" };
   }
 
   async getCurrentUser() {
