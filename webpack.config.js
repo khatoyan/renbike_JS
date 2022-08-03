@@ -99,9 +99,8 @@ module.exports = {
     hot: false,
     liveReload: true,
     proxy: {
-      "/v1": {
+      "/api": {
         target: "http://localhost:3010",
-        pathRewrite: { "^/v1": "" },
       },
     },
   },

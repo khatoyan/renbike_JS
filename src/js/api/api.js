@@ -38,6 +38,25 @@ class API {
     return { status: "success", value: { login: data.login } };
   }
 
+  async registration({ login, password }) {
+    const body = JSON.stringify({ login, password });
+
+    const res = await fetch(apiRoutes.currentUser, {
+      body,
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      return { status: "error", value: res.status };
+    }
+
+    const data = await res.json();
+
+    return { status: "success", value: { login: data.login } };
+  }
+
   async getCurrentUser() {
     const res = await fetch(apiRoutes.currentUser, {
       method: "GET",

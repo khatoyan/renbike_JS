@@ -33,7 +33,7 @@
             <button id="btn-login" type="submit" class="button button--wide button--large">Войти</button>
           </div>
           <div class="form__row form__row--center">
-            <a href="#modal-registration">Зарегистрироваться</a>
+            <a role="button" id="auth-form-reg-link">Зарегистрироваться</a>
           </div>
         </form>
       </div>
@@ -46,25 +46,25 @@
           <h2>Регистрация</h2>
           <div data-control="modal-btn-close"><img src="../../images/close.svg" alt="close"></div>
         </header>
-        <form action="" class="form">
+        <form id="reg-form" class="form">
           <div class="form__row">
             <label class="form__label" for="reg-email">Электронная почта</label>
-            <input type="email" class="form__input input" id="reg-email" required>
+            <input type="email" class="form__input input" name="reg-email" required>
           </div>
           <div class="form__row">
             <label class="form__label" for="reg-password1">Пароль</label>
-            <input type="password" class="form__input input" id="reg-password1" required>
+            <input type="password" class="form__input input" name="reg-password1" required>
             <label class="form__label form__label--hint" for="reg-password1">Минимум 8 символов</label>
           </div>
           <div class="form__row">
             <label class="form__label" for="reg-password2">Повторите пароль</label>
-            <input type="password" class="form__input input" id="reg-password2" required>
+            <input type="password" class="form__input input" name="reg-password2" required>
           </div>
           <div class="form__row">
-            <a href="#modal-card" class="button button--wide button--large">Зарегистрироваться</a>
+            <button type="submit" id="btn-reg" class="button button--wide button--large">Зарегистрироваться</a>
           </div>
           <div class="form__row form__row--center">
-            <a href="#modal-login">Войти</a>
+            <a role="button" id="reg-form-auth-link">Войти</a>
           </div>
         </form>
       </div>
@@ -108,7 +108,7 @@
 
         <div class="header__user-panel" id="user-panel-unauthorized" hidden>
           <button class="button header__button" id="btn-open-modal-login">Войти</button>
-          <button class="button button--light header__button">Регистрация</button>
+          <button class="button button--light header__button" id="btn-open-modal-reg">Регистрация</button>
         </div>
 
         <div class="header__user-panel" id="user-panel-authorized" hidden>
