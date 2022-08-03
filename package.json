@@ -1,5 +1,5 @@
 {
-  "name": "static-site-webpack-habr",
+  "name": "js-bike-rent",
   "version": "2.0.0",
   "description": "HTML template",
   "main": "src/index.js",

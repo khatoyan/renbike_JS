@@ -23,7 +23,7 @@ const pages = [
     new HtmlWebpackPlugin({
       filename: row.filename,
       template: row.path,
-      inject: "body",
+      inject: false,
       title: row.title,
     })
 );
@@ -40,6 +40,10 @@ module.exports = {
     header: {
       dependOn: "main",
       import: "./src/js/modules/header.js",
+    },
+    catalog: {
+      dependOn: "main",
+      import: "./src/js/modules/catalog.js",
     },
   },
   output: {
