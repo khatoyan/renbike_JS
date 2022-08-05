@@ -1,8 +1,10 @@
 import { api } from "../api";
 import { app } from "../app";
 
-import { getDeclensionWord } from "../helpers";
+import { getDeclensionWord, getValueFromQuery } from "../helpers";
 
+const pointIdQueryName = "pointId";
+const pageQueryName = "page";
 const bikeDeclension = {
   1: "велосипед",
   "2-4": "велосипеда",
@@ -10,11 +12,72 @@ const bikeDeclension = {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const { items: bikes, total: bikesCount } = await getCatalogItem();
+  const pointId = getValueFromQuery(pointIdQueryName) || "";
+  const currentPage = getValueFromQuery(pageQueryName) || 1;
 
+  const {
+    items: bikes,
+    total: bikesCount,
+    pages: totalPages,
+  } = await getCatalogItem({
+    pointId,
+    currentPage,
+  });
+
+  renderPagination({ totalPages, currentPage });
   setBikesCount(bikesCount);
   renderCatalog(bikes);
 });
+
+function renderPagination({ currentPage, totalPages }) {
+  const container = document.getElementById("pagination");
+
+  for (let index = 0; index < totalPages; index++) {
+    const pageNumber = index + 1;
+    container.append(
+      getPaginationElementLink({
+        pageNumber,
+        isActive: +currentPage === pageNumber,
+      })
+    );
+  }
+
+  if (currentPage < totalPages) {
+    container.append(getPaginationNextButton(+currentPage + 1));
+  }
+}
+
+function getPaginationElementLink({ pageNumber, isActive }) {
+  const link = document.createElement("a");
+
+  link.setAttribute("href", getPaginationLink(pageNumber));
+  link.classList.add("pagination__link");
+  link.textContent = pageNumber;
+
+  if (isActive) {
+    link.classList.add("pagination__link--active");
+  }
+
+  return link;
+}
+
+function getPaginationLink(pageNumber) {
+  const query = new URLSearchParams(document.location.search);
+
+  query.set(pageQueryName, pageNumber);
+
+  return `${document.location.pathname}?${query.toString()}`;
+}
+
+function getPaginationNextButton(pageNumber) {
+  const link = document.createElement("a");
+
+  link.setAttribute("href", getPaginationLink(pageNumber));
+  link.classList.add("pagination__next");
+  link.textContent = "Дальше";
+
+  return link;
+}
 
 function setBikesCount(count) {
   document.getElementById(
@@ -22,10 +85,10 @@ function setBikesCount(count) {
   ).textContent = `${count} ${getDeclensionWord(count, bikeDeclension)}`;
 }
 
-async function getCatalogItem() {
+async function getCatalogItem({ currentPage }) {
   const res = await api.getBikes({
     pointId: "",
-    page: 1,
+    page: currentPage,
   });
 
   if (res.status === "error") {

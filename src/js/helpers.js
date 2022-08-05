@@ -14,3 +14,7 @@ export function getDeclensionWord(value, declensions) {
 
   return declensions["5"];
 }
+
+export function getValueFromQuery(name) {
+  return new URLSearchParams(document.location.search).get(name);
+}

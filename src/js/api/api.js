@@ -106,7 +106,11 @@ class API {
 
     return {
       status: "success",
-      value: { items: data.itemsInPage, total: data.totalItems },
+      value: {
+        items: data.itemsInPage,
+        total: data.totalItems,
+        pages: data.pages,
+      },
     };
   }
 
