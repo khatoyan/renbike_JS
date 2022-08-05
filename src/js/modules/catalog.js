@@ -1,20 +1,39 @@
 import { api } from "../api";
+import { app } from "../app";
+
+import { getDeclensionWord } from "../helpers";
+
+const bikeDeclension = {
+  1: "велосипед",
+  "2-4": "велосипеда",
+  5: "велосипедов",
+};
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const bikes = await getCatalogItem();
+  const { items: bikes, total: bikesCount } = await getCatalogItem();
 
+  setBikesCount(bikesCount);
   renderCatalog(bikes);
 });
 
-async function getCatalogItem() {
-  const bikes = await api.getBikes({ pointId: "", page: 1 });
+function setBikesCount(count) {
+  document.getElementById(
+    "bikes-count"
+  ).textContent = `${count} ${getDeclensionWord(count, bikeDeclension)}`;
+}
 
-  if (bikes.status === "error") {
+async function getCatalogItem() {
+  const res = await api.getBikes({
+    pointId: "",
+    page: 1,
+  });
+
+  if (res.status === "error") {
     alert("Ошибка загрузки каталога");
     return;
   }
 
-  return bikes.value.items;
+  return res.value;
 }
 
 function renderCatalog(bikes) {
@@ -30,21 +49,44 @@ function getBikeCard(bike) {
     .getElementById("bike-template-card")
     .cloneNode(true);
 
+  const imageSRC = api.getBikeImagePath(bike._id);
+
   template.querySelector('[data-field="bike-name"]').textContent = bike.name;
-  template.querySelector('[data-field="bike-img"]').textContent =
-    api.getBikeImagePath(bike.img);
+  template.querySelector(
+    '[data-field="bike-cost"]'
+  ).textContent = `${bike.cost} ₽/час`;
+
+  template
+    .querySelector('[data-field="bike-img"]')
+    .setAttribute("src", imageSRC);
 
   template
     .querySelectorAll('[data-field="bike-order-btn"]')
     .forEach((element) => {
-      element.addEventListener("click", handleBikeOrderClick);
+      element.addEventListener("click", () => handleBikeOrderClick(bike));
     });
 
-  template.classList.remove("hidden");
+  app.showElement(template);
 
   return template;
 }
 
-function handleBikeOrderClick(bike) {}
+function handleBikeOrderClick(bike) {
+  openModalBike(bike);
+}
 
-function renderModalBike() {}
+function openModalBike(bike) {
+  const modalId = "template-modal-bike";
+  const template = document.getElementById(modalId);
+  const imageSRC = api.getBikeImagePath(bike._id);
+
+  template.querySelector('[data-field="bike-name"]').textContent = bike.name;
+  template.querySelector(
+    '[data-field="bike-cost"]'
+  ).textContent = `${bike.cost} ₽/час`;
+  template
+    .querySelector('[data-field="bike-img"]')
+    .setAttribute("src", imageSRC);
+
+  app.openModal(modalId);
+}

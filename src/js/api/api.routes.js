@@ -4,4 +4,5 @@ export const apiRoutes = {
   order: "/api/order",
   bikes: "/api/catalog/:pointId",
   bike: "/api/catalog/bike/:bikeId",
+  bikeImage: "/api/catalog/bike/:bikeId/img",
 };

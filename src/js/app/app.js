@@ -14,7 +14,7 @@ class App {
       return;
     }
 
-    modal.classList.remove("modal--active");
+    this.hideElement(modal);
   }
 
   openModal(modalId) {
@@ -24,15 +24,23 @@ class App {
       return;
     }
 
-    modal.classList.add("modal--active");
+    this.showElement(modal);
 
     modal
       .querySelector('[data-control="modal-background"]')
-      .addEventListener("click", () => this.closeModal(modalId));
+      .addEventListener("click", () => this.hideElement(modal));
 
     modal
       .querySelector('[data-control="modal-btn-close"]')
-      .addEventListener("click", () => this.closeModal(modalId));
+      .addEventListener("click", () => this.hideElement(modal));
+  }
+
+  hideElement(element) {
+    element.classList.add("hidden");
+  }
+
+  showElement(element) {
+    element.classList.remove("hidden");
   }
 }
 

@@ -104,11 +104,14 @@ class API {
 
     const data = await res.json();
 
-    return { status: "success", value: { items: data.itemsInPage } };
+    return {
+      status: "success",
+      value: { items: data.itemsInPage, total: data.totalItems },
+    };
   }
 
   getBikeImagePath(bikeId) {
-    return this._insertParam(apiRoutes.bike, { path: { bikeId } });
+    return this._insertParam(apiRoutes.bikeImage, { path: { bikeId } });
   }
 }
 
