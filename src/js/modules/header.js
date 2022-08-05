@@ -8,12 +8,16 @@ document.addEventListener("DOMContentLoaded", () => {
 async function init() {
   const res = await api.getCurrentUser();
 
-  if (res.status === "error") {
-    showUnauthorizedUserPanel();
+  if (res.status === "success") {
+    showAuthorizedUserPanel(res.value.login);
     return;
   }
 
-  showAuthorizedUserPanel(res.value.login);
+  if (document.location.pathname !== "/") {
+    document.location.pathname = "/";
+  }
+
+  showUnauthorizedUserPanel();
 }
 
 function showUnauthorizedUserPanel() {
@@ -101,7 +105,6 @@ function initListeners() {
     app.openModal("modal-card");
     hideUnauthorizedUserPanel();
     init();
-    card - form;
   });
 
   document.getElementById("card-form").addEventListener("submit", async (e) => {

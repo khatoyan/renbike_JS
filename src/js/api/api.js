@@ -9,7 +9,7 @@ class API {
     const { path, query } = config;
 
     if (path) {
-      pathname = url.replace(/(?::(\w+))/g, (_, name) => path[name]);
+      pathname = pathname.replace(/(?::(\w+))/g, (_, name) => path[name]);
     }
 
     if (query) {
@@ -85,6 +85,30 @@ class API {
     const data = await res.json();
 
     return { status: "success", value: { login: data.login } };
+  }
+
+  async getBikes({ pointId, page }) {
+    const url = this._insertParam(apiRoutes.bikes, {
+      query: { page },
+      path: { pointId },
+    });
+
+    const res = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      return { status: "error" };
+    }
+
+    const data = await res.json();
+
+    return { status: "success", value: { items: data.itemsInPage } };
+  }
+
+  getBikeImagePath(bikeId) {
+    return this._insertParam(apiRoutes.bike, { path: { bikeId } });
   }
 }
 

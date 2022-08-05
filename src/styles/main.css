@@ -98,6 +98,10 @@ select::placeholder {
   color: var(--colorTextSecondary);
 }
 
+.hidden.hidden.hidden {
+  display: none;
+}
+
 /* link */
 .link {
   display: inline;

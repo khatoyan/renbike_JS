@@ -21,79 +21,7 @@
       <span class="catalog-header__text">148 велосипедов</span>
     </aside>
   </header>
-  <section class="catalog">
-    <div class="bike-card catalog__item">
-      <a href="#modal-bike" class="bike-card__preview"><img src="../../images/b1.png" alt=""></a>
-      <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-      <p>240 ₽/час</p>
-      <footer class="bike-card__footer">
-        <a href="#modal-bike" class="button">Арендовать</a>
-      </footer>
-    </div>
-    <div class="bike-card catalog__item">
-      <a href="#modal-bike" class="bike-card__preview"><img src="../../images/b2.png" alt=""></a>
-      <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-      <p>240 ₽/час</p>
-      <footer class="bike-card__footer">
-        <a href="#modal-bike" class="button">Арендовать</a>
-      </footer>
-    </div>
-    <div class="bike-card catalog__item">
-      <a href="#modal-bike" class="bike-card__preview"><img src="../../images/b3.png" alt=""></a>
-      <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-      <p>240 ₽/час</p>
-      <footer class="bike-card__footer">
-        <a href="#modal-bike" class="button">Арендовать</a>
-      </footer>
-    </div>
-    <div class="bike-card catalog__item">
-      <a href="#modal-bike" class="bike-card__preview"><img src="../../images/b1.png" alt=""></a>
-      <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-      <p>240 ₽/час</p>
-      <footer class="bike-card__footer">
-        <a href="#modal-bike" class="button">Арендовать</a>
-      </footer>
-    </div>
-    <div class="bike-card catalog__item">
-      <a href="#modal-bike" class="bike-card__preview"><img src="../../images/b2.png" alt=""></a>
-      <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-      <p>240 ₽/час</p>
-      <footer class="bike-card__footer">
-        <a href="#modal-bike" class="button">Арендовать</a>
-      </footer>
-    </div>
-    <div class="bike-card catalog__item">
-      <a href="#modal-bike" class="bike-card__preview"><img src="../../images/b3.png" alt=""></a>
-      <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-      <p>240 ₽/час</p>
-      <footer class="bike-card__footer">
-        <a href="#modal-bike" class="button">Арендовать</a>
-      </footer>
-    </div>
-    <div class="bike-card catalog__item">
-      <a href="#modal-bike" class="bike-card__preview"><img src="../../images/b1.png" alt=""></a>
-      <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-      <p>240 ₽/час</p>
-      <footer class="bike-card__footer">
-        <a href="#modal-bike" class="button">Арендовать</a>
-      </footer>
-    </div>
-    <div class="bike-card catalog__item">
-      <a href="#modal-bike" class="bike-card__preview"><img src="../../images/b2.png" alt=""></a>
-      <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-      <p>240 ₽/час</p>
-      <footer class="bike-card__footer">
-        <a href="#modal-bike" class="button">Арендовать</a>
-      </footer>
-    </div>
-    <div class="bike-card catalog__item">
-      <a href="#modal-bike" class="bike-card__preview"><img src="../../images/b3.png" alt=""></a>
-      <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-      <p>240 ₽/час</p>
-      <footer class="bike-card__footer">
-        <a href="#modal-bike" class="button">Арендовать</a>
-      </footer>
-    </div>
+  <section class="catalog" id="catalog">
   </section>
   <section class="pagination">
     <a href="#" class="pagination__link pagination__link--active">1</a>
@@ -106,6 +34,17 @@
     <a href="#" class="pagination__next">Дальше</a>
   </section>
 
-  <script type="module" src="/catalog.js"></script>
+  <div class="bike-card catalog__item hidden" id="bike-template-card">
+    <a data-field="bike-order-btn" class="bike-card__preview">
+      <img data-field="bike-img" src="../../images/b1.png" alt="Велосипед">
+    </a>
+    <h4 data-field="bike-name">FORWARD APACHE 29 3.0 HD 2022</h4>
+    <p>240 ₽/час</p>
+    <footer class="bike-card__footer">
+      <button data-field="bike-order-btn" class="button">Арендовать</a>
+    </footer>
+  </div>
+
+  <script src="/catalog.js"></script>
 
   <%= require('../includes/footer.html').default %>
