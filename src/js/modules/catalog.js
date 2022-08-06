@@ -1,7 +1,11 @@
 import { api } from "../api";
 import { app } from "../app";
 
-import { getDeclensionWord, getValueFromQuery } from "../helpers";
+import {
+  getDeclensionWord,
+  getValueFromQuery,
+  getUpdatedQuery,
+} from "../helpers";
 
 const pointIdQueryName = "pointId";
 const pageQueryName = "page";
@@ -24,13 +28,70 @@ document.addEventListener("DOMContentLoaded", async () => {
     currentPage,
   });
 
+  renderTabs(pointId);
   renderPagination({ totalPages, currentPage });
   setBikesCount(bikesCount);
   renderCatalog(bikes);
 });
 
+async function renderTabs(currentPointId) {
+  const container = document.getElementById("pointsTabs");
+  const points = await api.getPoints();
+
+  if (points.status === "error") {
+    alert("Ошибка загрузки точек проката");
+    return;
+  }
+
+  points.value.items.forEach((el) => {
+    container.append(
+      getPointElementLink({ ...el, isActive: currentPointId === el._id })
+    );
+  });
+
+  container.append(
+    getPointElementLink({
+      _id: "",
+      address: "Все пункты",
+      isActive: !currentPointId,
+    })
+  );
+}
+
+function getPointElementLink({ address, _id, isActive }) {
+  const link = document.createElement("a");
+
+  link.setAttribute("href", getPointLink(_id));
+  link.classList.add("tabs__link");
+  link.textContent = address;
+
+  if (isActive) {
+    link.classList.add("tabs__link--active");
+  }
+
+  return link;
+}
+
+function getPointLink(pointId) {
+  const queryWithPointId = getUpdatedQuery(document.location.search, {
+    name: pointIdQueryName,
+    value: pointId,
+  }).toString();
+
+  const newQuery = getUpdatedQuery(queryWithPointId, {
+    name: pageQueryName,
+    value: "",
+  }).toString();
+
+  return `${document.location.pathname}?${newQuery}`;
+}
+
 function renderPagination({ currentPage, totalPages }) {
   const container = document.getElementById("pagination");
+
+  if (totalPages < 2) {
+    return;
+  }
 
   for (let index = 0; index < totalPages; index++) {
     const pageNumber = index + 1;
@@ -62,11 +123,12 @@ function getPaginationElementLink({ pageNumber, isActive }) {
 }
 
 function getPaginationLink(pageNumber) {
-  const query = new URLSearchParams(document.location.search);
+  const query = getUpdatedQuery(document.location.search, {
+    name: pageQueryName,
+    value: pageNumber,
+  }).toString();
 
-  query.set(pageQueryName, pageNumber);
-
-  return `${document.location.pathname}?${query.toString()}`;
+  return `${document.location.pathname}?${query}`;
 }
 
 function getPaginationNextButton(pageNumber) {
@@ -85,9 +147,9 @@ function setBikesCount(count) {
   ).textContent = `${count} ${getDeclensionWord(count, bikeDeclension)}`;
 }
 
-async function getCatalogItem({ currentPage }) {
+async function getCatalogItem({ currentPage, pointId }) {
   const res = await api.getBikes({
-    pointId: "",
+    pointId: pointId,
     page: currentPage,
   });
 

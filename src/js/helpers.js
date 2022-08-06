@@ -18,3 +18,9 @@ export function getDeclensionWord(value, declensions) {
 export function getValueFromQuery(name) {
   return new URLSearchParams(document.location.search).get(name);
 }
+
+export function getUpdatedQuery(query, { name, value }) {
+  const newQuery = new URLSearchParams(query);
+  newQuery.set(name, value);
+  return newQuery.toString();
+}

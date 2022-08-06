@@ -117,6 +117,26 @@ class API {
   getBikeImagePath(bikeId) {
     return this._insertParam(apiRoutes.bikeImage, { path: { bikeId } });
   }
+
+  async getPoints() {
+    const res = await fetch(apiRoutes.poits, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      return { status: "error" };
+    }
+
+    const data = await res.json();
+
+    return {
+      status: "success",
+      value: {
+        items: data.map(({ address, _id }) => ({ address, _id })),
+      },
+    };
+  }
 }
 
 export const api = new API();
