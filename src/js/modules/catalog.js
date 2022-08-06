@@ -76,12 +76,12 @@ function getPointLink(pointId) {
   const queryWithPointId = getUpdatedQuery(document.location.search, {
     name: pointIdQueryName,
     value: pointId,
-  }).toString();
+  });
 
   const newQuery = getUpdatedQuery(queryWithPointId, {
     name: pageQueryName,
     value: "",
-  }).toString();
+  });
 
   return `${document.location.pathname}?${newQuery}`;
 }
@@ -126,7 +126,7 @@ function getPaginationLink(pageNumber) {
   const query = getUpdatedQuery(document.location.search, {
     name: pageQueryName,
     value: pageNumber,
-  }).toString();
+  });
 
   return `${document.location.pathname}?${query}`;
 }
