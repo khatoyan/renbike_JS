@@ -156,6 +156,48 @@ class API {
       status: "success",
     };
   }
+
+  async getOrders() {
+    const res = await fetch(apiRoutes.order, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      return { status: "error" };
+    }
+
+    const data = await res.json();
+
+    return {
+      status: "success",
+      value: {
+        items: data,
+      },
+    };
+  }
+
+  async getBike(bikeId) {
+    const url = this._insertParam(apiRoutes.bike, {
+      path: { bikeId },
+    });
+
+    const res = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      return { status: "error" };
+    }
+
+    const data = await res.json();
+
+    return {
+      status: "success",
+      value: data,
+    };
+  }
 }
 
 export const api = new API();

@@ -59,6 +59,10 @@ module.exports = {
       dependOn: "main",
       import: "./src/js/modules/settings.js",
     },
+    booking: {
+      dependOn: "main",
+      import: "./src/js/modules/booking.js",
+    }
   },
   output: {
     path: dist,
