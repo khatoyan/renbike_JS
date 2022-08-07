@@ -22,7 +22,7 @@
     </footer>
   </div>
 
-  <div class="modal modal--bike hidden" id="template-modal-bike">
+  <div class="modal modal--bike hidden" id="template-modal-bike-rented">
     <div class="modal__background" data-control="modal-background"></div>
     <div class="modal__content">
       <header class="modal__title">
@@ -41,6 +41,28 @@
           <br />
           <br />
           <img src="./images/qr.png" alt="">
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal modal--bike hidden" id="template-modal-bike">
+    <div class="modal__background" data-control="modal-background"></div>
+    <div class="modal__content">
+      <header class="modal__title">
+        <h2 data-field="bike-name" class="modal__title-text"></h2>
+        <img data-control="modal-btn-close" src="./images/close.svg" alt="close">
+      </header>
+      <div class="bike-details">
+        <div class="bike-details__content">
+          <img data-field="bike-img" alt="bike" />
+          <h4 class="bike-details__subheader">Пункт проката</h4>
+          <img src="./images/map.png" alt="map">
+        </div>
+        <aside class="bike-details__aside">
+          <h3 data-field="bike-cost"></h3>
+          <br />
+          <button data-control="bike-rent" class="button">Арендовать</button>
         </aside>
       </div>
     </div>

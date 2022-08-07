@@ -15,7 +15,12 @@ const bikeDeclension = {
   5: "велосипедов",
 };
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", () => {
+  app.eventSubscribers.push({
+    eventName: "initedAuthorizedUser",
+    callback: init,
+  });
+});
 
 async function init() {
   const pointId = getValueFromQuery(pointIdQueryName) || "";
@@ -190,7 +195,7 @@ function getBikeCard(bike) {
   template
     .querySelectorAll('[data-field="bike-order-btn"]')
     .forEach((element) => {
-      element.addEventListener("click", () => handleBikeOrderClick(bike));
+      element.addEventListener("click", () => handleBikeClick(bike));
     });
 
   app.showElement(template);
@@ -198,22 +203,55 @@ function getBikeCard(bike) {
   return template;
 }
 
-function handleBikeOrderClick(bike) {
-  openModalBike(bike);
+function handleBikeClick(bike) {
+  if (bike.isRented) {
+    openModalBikeRented(bike);
+    return;
+  }
+
+  openModalBikeFree(bike);
 }
 
-function openModalBike(bike) {
-  const modalId = "template-modal-bike";
+function openModalBikeRented(bike) {
+  const modalId = "template-modal-bike-rented";
   const template = document.getElementById(modalId);
-  const imageSRC = api.getBikeImagePath(bike._id);
 
-  template.querySelector('[data-field="bike-name"]').textContent = bike.name;
-  template.querySelector(
-    '[data-field="bike-cost"]'
-  ).textContent = `${bike.cost} ₽/час`;
-  template
-    .querySelector('[data-field="bike-img"]')
-    .setAttribute("src", imageSRC);
+  fillDefaultFieldBikeModal(template, bike);
 
   app.openModal(modalId);
+}
+
+function openModalBikeFree(bike) {
+  const modalId = "template-modal-bike";
+  const template = document.getElementById(modalId);
+
+  fillDefaultFieldBikeModal(template, bike);
+  template
+    .querySelector('[data-control="bike-rent"]')
+    .addEventListener("click", () => {
+      handleBikeRentClick(bike._id);
+    });
+
+  app.openModal(modalId);
+}
+
+async function handleBikeRentClick(bikeId) {
+  const res = await api.pushOrder(bikeId);
+
+  if (res.status === "error") {
+    alert("Ошибка аренды велосипеда");
+    return;
+  }
+
+  document.location.href = "/booking.html";
+}
+
+function fillDefaultFieldBikeModal(modal, bike) {
+  const imageSRC = api.getBikeImagePath(bike._id);
+
+  modal.querySelector('[data-field="bike-name"]').textContent = bike.name;
+  modal.querySelector(
+    '[data-field="bike-cost"]'
+  ).textContent = `${bike.cost} ₽/час`;
+  modal.querySelector('[data-field="bike-img"]').setAttribute("src", imageSRC);
 }
