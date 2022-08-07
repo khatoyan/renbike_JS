@@ -6,7 +6,7 @@
       <form class="settings__row-content settings__row-content--edit" id="email-edit">
         <label class="settings__label" for="settings-email">Электронная почта</label>
         <div class="settings__form-row">
-          <input type="text" class="input" value="ivanov@gmail.com" required id="settings-email">
+          <input type="text" class="input" name="email" required id="settings-email">
         </div>
         <div class="settings__form-row">
           <button type="submit" class="button">Изменить</button>
@@ -21,9 +21,9 @@
     </div>
     <div class="settings__row">
       <form class="settings__row-content settings__row-content--edit" id="password-edit">
-        <label class="settings__label" for="settings-new-pass">Новый пароль</label>
+        <label class="settings__label" for="new-pass">Новый пароль</label>
         <div class="settings__form-row">
-          <input type="password" class="input" required id="settings-new-pass">
+          <input type="password" class="input" required name="new-pass">
         </div>
         <div class="settings__form-row settings__form-row--tip">
           Минимум 8 символов
@@ -47,15 +47,16 @@
       <form class="settings__row-content settings__row-content--edit" id="card-edit">
         <label class="settings__label" for="settings-number">Карта</label>
         <div class="settings__form-row">
-          <input type="text" class="input" placeholder="0000 0000 0000 0000" required id="settings-number">
+          <input type="text" class="input" placeholder="0000 0000 0000 0000" required name="number"
+            id="settings-number">
         </div>
         <label class="settings__label" for="settings-date">Срок</label>
         <div class="settings__form-row">
-          <input type="month" class="input input--short" required id="settings-date">
+          <input type="month" class="input input--short" required name="date" id="settings-date">
         </div>
         <label class="settings__label" for="settings-cvv">CVV</label>
         <div class="settings__form-row">
-          <input type="password" class="input input--short" maxlength="3" required id="settings-cvv">
+          <input type="password" class="input input--short" maxlength="3" name="cvv" required id="settings-cvv">
         </div>
         <div class="settings__form-row">
           <button type="submit" class="button">Изменить</button>
