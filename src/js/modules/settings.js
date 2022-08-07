@@ -22,17 +22,21 @@ function setEmail(email) {
   document.getElementById("settings-email").value = email;
 }
 
-function setCardRequisite(card) {
+function setCardRequisite(cardRequisites) {
+  const card = cardRequisites || {};
+
+  document.getElementById("settings-number").value = card.number || "";
+  document.getElementById("settings-date").value = card.date || "";
+  document.getElementById("settings-cvv").value = card.cvv || "";
+
+  document.getElementById("card-number-value").textContent = card.number
+    ? getCardNumberWithMask(card.number)
+    : "Не заполнено";
+}
+
+function getCardNumberWithMask(number) {
   const hiddenCardNumber = "•••• •••• •••• ";
-  document.getElementById("settings-number").value = card.number;
-  document.getElementById("settings-date").value = card.date;
-  document.getElementById("settings-cvv").value = card.cvv;
-  document.getElementById(
-    "card-number-value"
-  ).textContent = `${hiddenCardNumber}${card.number
-    .split("")
-    .slice(-4)
-    .join("")}`;
+  return `${hiddenCardNumber}${number.split("").slice(-4).join("")}`;
 }
 
 function initListeners() {
@@ -87,11 +91,7 @@ function initListeners() {
     };
 
     const res = await api.updateCurrentUser({
-      cardRequisites: {
-        number: formData["number"],
-        date: formData["date"],
-        cvv: formData["cvv"],
-      },
+      cardRequisites,
     });
 
     if (res.status === "error") {

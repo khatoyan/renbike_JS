@@ -137,6 +137,25 @@ class API {
       },
     };
   }
+
+  async pushOrder(bikeId) {
+    const body = JSON.stringify({ bikeId });
+
+    const res = await fetch(apiRoutes.order, {
+      body,
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      return { status: "error" };
+    }
+
+    return {
+      status: "success",
+    };
+  }
 }
 
 export const api = new API();
