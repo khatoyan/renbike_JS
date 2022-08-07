@@ -1,38 +1,12 @@
 import { app } from "../app";
 import { api } from "../api";
+import { hideUnauthorizedUserPanel, showAuthorizedUserPanel } from "../helpers";
 
-document.addEventListener("DOMContentLoaded", () => {
-  init();
-});
+document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
-  const res = await api.getCurrentUser();
-
-  if (res.status === "success") {
-    showAuthorizedUserPanel(res.value.login);
-    return;
-  }
-
-  if (document.location.pathname !== "/") {
-    document.location.pathname = "/";
-  }
-
-  showUnauthorizedUserPanel();
-}
-
-function showUnauthorizedUserPanel() {
-  document.getElementById("user-panel-unauthorized").removeAttribute("hidden");
+  await app.init();
   initListeners();
-}
-
-function hideUnauthorizedUserPanel() {
-  document.getElementById("user-panel-unauthorized").setAttribute("hidden", "");
-  initListeners();
-}
-
-function showAuthorizedUserPanel(login) {
-  document.getElementById("user-panel-login").textContent = login;
-  document.getElementById("user-panel-authorized").removeAttribute("hidden");
 }
 
 function initListeners() {

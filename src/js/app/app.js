@@ -1,11 +1,43 @@
 import { api } from "../api";
+import { showAuthorizedUserPanel, showUnauthorizedUserPanel } from "../helpers";
 
 class App {
+  eventSubscribers = [];
+  currentUserInfo = {};
+
   constructor(api) {
     this._api = api;
   }
 
-  init() {}
+  async init() {
+    const res = await api.getCurrentUser();
+
+    if (res.status === "success") {
+      showAuthorizedUserPanel(res.value.login);
+
+      this.currentUserInfo = res.value;
+      this.resolveEventSubscribers("initedAuthorizedUser");
+      return;
+    }
+
+    if (document.location.pathname !== "/") {
+      document.location.pathname = "/";
+    }
+
+    showUnauthorizedUserPanel();
+  }
+
+  resolveEventSubscribers(eventName) {
+    this.eventSubscribers = this.eventSubscribers
+      .map((el) => {
+        if (el.eventName === eventName) {
+          el.callback();
+        }
+
+        return el;
+      })
+      .filter((el) => el.eventName !== eventName);
+  }
 
   closeModal(modalId) {
     const modal = document.getElementById(modalId);
@@ -36,10 +68,18 @@ class App {
   }
 
   hideElement(element) {
+    if (typeof element === "string") {
+      element = document.getElementById(element);
+    }
+
     element.classList.add("hidden");
   }
 
   showElement(element) {
+    if (typeof element === "string") {
+      element = document.getElementById(element);
+    }
+
     element.classList.remove("hidden");
   }
 }

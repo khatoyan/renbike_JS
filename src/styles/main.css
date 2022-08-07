@@ -464,7 +464,7 @@ input:checked + .catalog-header__switch {
 }
 
 .input--short {
-  width: calc(var(--m) * 14);
+  width: calc(var(--m) * 24);
 }
 
 /* button */

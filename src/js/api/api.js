@@ -84,7 +84,7 @@ class API {
 
     const data = await res.json();
 
-    return { status: "success", value: { login: data.login } };
+    return { status: "success", value: data };
   }
 
   async getBikes({ pointId, page }) {

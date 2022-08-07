@@ -15,7 +15,9 @@ const bikeDeclension = {
   5: "велосипедов",
 };
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", init);
+
+async function init() {
   const pointId = getValueFromQuery(pointIdQueryName) || "";
   const currentPage = getValueFromQuery(pageQueryName) || 1;
 
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderPagination({ totalPages, currentPage });
   setBikesCount(bikesCount);
   renderCatalog(bikes);
-});
+}
 
 async function renderTabs(currentPointId) {
   const container = document.getElementById("pointsTabs");

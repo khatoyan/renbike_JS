@@ -1,0 +1,75 @@
+<%= require('../includes/header.html').default %>
+
+  <h1 class="app__content-header">Настройки</h1>
+  <section class="settings">
+    <div class="settings__row">
+      <form class="settings__row-content settings__row-content--edit" id="email-edit">
+        <label class="settings__label" for="settings-email">Электронная почта</label>
+        <div class="settings__form-row">
+          <input type="text" class="input" value="ivanov@gmail.com" required id="settings-email">
+        </div>
+        <div class="settings__form-row">
+          <button type="submit" class="button">Изменить</button>
+        </div>
+      </form>
+      <div class="settings__row-content">
+        <label class="settings__label">Электронная почта</label>
+        <span id="email-value"></span>
+      </div>
+      <a href="#email-edit" class="settings__link">Изменить</a>
+      <a href="#" class="settings__link settings__link--cancel">Отменить</a>
+    </div>
+    <div class="settings__row">
+      <form class="settings__row-content settings__row-content--edit" id="password-edit">
+        <label class="settings__label" for="settings-new-pass">Новый пароль</label>
+        <div class="settings__form-row">
+          <input type="password" class="input" required id="settings-new-pass">
+        </div>
+        <div class="settings__form-row settings__form-row--tip">
+          Минимум 8 символов
+        </div>
+        <label class="settings__label" for="settings-repeat-pass">Повторите пароль</label>
+        <div class="settings__form-row">
+          <input type="password" class="input" required id="settings-repeat-pass">
+        </div>
+        <div class="settings__form-row">
+          <button type="submit" class="button">Изменить</button>
+        </div>
+      </form>
+      <div class="settings__row-content">
+        <label class="settings__label">Пароль</label>
+        ••••••••••••
+      </div>
+      <a href="#password-edit" class="settings__link">Изменить</a>
+      <a href="#" class="settings__link settings__link--cancel">Отменить</a>
+    </div>
+    <div class="settings__row">
+      <form class="settings__row-content settings__row-content--edit" id="card-edit">
+        <label class="settings__label" for="settings-number">Карта</label>
+        <div class="settings__form-row">
+          <input type="text" class="input" placeholder="0000 0000 0000 0000" required id="settings-number">
+        </div>
+        <label class="settings__label" for="settings-date">Срок</label>
+        <div class="settings__form-row">
+          <input type="month" class="input input--short" required id="settings-date">
+        </div>
+        <label class="settings__label" for="settings-cvv">CVV</label>
+        <div class="settings__form-row">
+          <input type="password" class="input input--short" maxlength="3" required id="settings-cvv">
+        </div>
+        <div class="settings__form-row">
+          <button type="submit" class="button">Изменить</button>
+        </div>
+      </form>
+      <div class="settings__row-content">
+        <label class="settings__label">Карта</label>
+        <span id="card-number-value"></span>
+      </div>
+      <a href="#card-edit" class="settings__link">Изменить</a>
+      <a href="#" class="settings__link settings__link--cancel">Отменить</a>
+    </div>
+  </section>
+
+  <script src="/settings.js"></script>
+
+  <%= require('../includes/footer.html').default %>

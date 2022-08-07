@@ -11,12 +11,22 @@ const pages = [
   {
     filename: "index.html",
     path: "./src/html/pages/index.html",
-    title: "Rent Bike | Добро пожаловать",
+    title: "Rent Bike | Главная",
   },
   {
     filename: "catalog.html",
     path: "./src/html/pages/catalog.html",
     title: "Rent Bike | Каталог",
+  },
+  {
+    filename: "settings.html",
+    path: "./src/html/pages/settings.html",
+    title: "Rent Bike | Настройки",
+  },
+  {
+    filename: "booking.html",
+    path: "./src/html/pages/booking.html",
+    title: "Rent Bike | Бронирования",
   },
 ].map(
   (row) =>
@@ -44,6 +54,10 @@ module.exports = {
     catalog: {
       dependOn: "main",
       import: "./src/js/modules/catalog.js",
+    },
+    settings: {
+      dependOn: "main",
+      import: "./src/js/modules/settings.js",
     },
   },
   output: {

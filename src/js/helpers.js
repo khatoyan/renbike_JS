@@ -1,3 +1,5 @@
+import { app } from "./app";
+
 export function getDeclensionWord(value, declensions) {
   let count = value % 100;
   if (count >= 5 && count <= 20) {
@@ -23,4 +25,17 @@ export function getUpdatedQuery(query, { name, value }) {
   const newQuery = new URLSearchParams(query);
   newQuery.set(name, value);
   return newQuery.toString();
+}
+
+export function showUnauthorizedUserPanel() {
+  app.showElement("user-panel-unauthorized");
+}
+
+export function showAuthorizedUserPanel(login) {
+  document.getElementById("user-panel-login").textContent = login;
+  app.showElement("user-panel-authorized");
+}
+
+export function hideUnauthorizedUserPanel() {
+  app.hideElement("user-panel-unauthorized");
 }
