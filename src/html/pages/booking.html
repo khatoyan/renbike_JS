@@ -1,32 +1,25 @@
 <%= require('../includes/header.html').default %>
 
-  <div class="app__main">
-    <main class="app__content">
-      <h1 class="app__content-header">Мои бронирования</h1>
-      <section class="catalog">
-        <div class="bike-card bike-card--no-footer catalog__item">
-          <a href="#modal-bike-booking" class="bike-card__preview"><img src="./img/b1.png" alt=""></a>
-          <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-          <p>240 ₽/час</p>
-        </div>
-      </section>
-      <h2 class="app__content-subheader">История бронирований</h2>
-      <section class="catalog">
-        <div class="bike-card bike-card--no-footer catalog__item">
-          <a href="#modal-bike-history" class="bike-card__preview"><img src="./img/b1.png" alt=""></a>
-          <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-          <p>240 ₽/час</p>
-        </div>
-        <div class="bike-card bike-card--no-footer catalog__item">
-          <a href="#modal-bike-history" class="bike-card__preview"><img src="./img/b2.png" alt=""></a>
-          <h4>FORWARD APACHE 29 3.0 HD 2022</h4>
-          <p>240 ₽/час</p>
-        </div>
-      </section>
-    </main>
-  </div>
+<div class="app__main">
+  <main class="app__content">
+    <h1 class="app__content-header">Мои бронирования</h1>
+    <section class="catalog" id="bookingList"></section>
+  </main>
+</div>
 
-  <script src="/booking.js"></script>
+<div
+  class="bike-card bike-card--no-footer catalog__item hidden"
+  id="order-card-template"
+>
+  <a data-field="bike-view-btn" class="bike-card__preview">
+    <img data-field="bike-img" alt="" />
+  </a>
+  <h4 data-field="bike-name"></h4>
+  <p data-field="bike-cost"></p>
+</div>
 
+<%= require('../includes/template-modal-bike-rented.html').default %>
 
-  <%= require('../includes/footer.html').default %>
+<script src="/booking.js"></script>
+
+<%= require('../includes/footer.html').default %>

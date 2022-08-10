@@ -3,8 +3,8 @@ import { app } from "../app";
 
 import {
   getDeclensionWord,
-  getValueFromQuery,
   getUpdatedQuery,
+  getValueFromQuery,
 } from "../helpers";
 
 const pointIdQueryName = "pointId";
@@ -212,7 +212,7 @@ function handleBikeClick(bike) {
   openModalBikeFree(bike);
 }
 
-function openModalBikeRented(bike) {
+export function openModalBikeRented(bike) {
   const modalId = "template-modal-bike-rented";
   const template = document.getElementById(modalId);
 
