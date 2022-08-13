@@ -8,6 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/style.bundle.css" />
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=470f2eac-54e2-4d0e-b168-50e0610de236&lang=ru_RU" type="text/javascript"></script>
 </head>
 
 <body>
@@ -23,11 +24,11 @@
         <form id="auth-form" class="form">
           <div class="form__row">
             <label class="form__label" for="login-email">Электронная почта</label>
-            <input type="email" class="form__input input" name="login-email" required>
+            <input type="email" class="form__input input" id="login-email" name="login-email" required>
           </div>
           <div class="form__row">
             <label class="form__label" for="login-password">Пароль</label>
-            <input type="password" class="form__input input" name="login-password" required>
+            <input type="password" class="form__input input" id="login-password" name="login-password" required>
           </div>
           <div class="form__row">
             <button type="submit" class="button button--wide button--large">Войти</button>

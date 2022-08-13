@@ -5,5 +5,6 @@ export const apiRoutes = {
   bikes: "/api/catalog/:pointId",
   bike: "/api/catalog/bike/:bikeId",
   bikeImage: "/api/catalog/bike/:bikeId/img",
-  poits: "/api/point",
+  points: "/api/point",
+  point: "/api/point/:pointId",
 };

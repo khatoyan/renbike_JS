@@ -51,11 +51,27 @@ export function fillDefaultFieldBikeModal(modal, bike) {
   modal.querySelector('[data-field="bike-img"]').setAttribute("src", imageSRC);
 }
 
+function initMap(bike) {
+  const map = new ymaps.Map("map", {
+    center: [54.983358, 82.967614],
+    zoom: 11,
+  });
+  if (bike.coordinates) {
+    const placemark = new ymaps.Placemark(bike.coordinates, {
+      balloonContent: bike.address,
+    });
+    map.geoObjects.add(placemark);
+    map.setBounds(map.geoObjects.getBounds(), { checkZoomRange: true });
+  }
+}
+
 export function openModalBikeRented(bike) {
   const modalId = "template-modal-bike-rented";
   const template = document.getElementById(modalId);
 
   fillDefaultFieldBikeModal(template, bike);
+
+  ymaps.ready(() => initMap(bike));
 
   app.openModal(modalId);
 }

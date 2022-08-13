@@ -119,7 +119,7 @@ class API {
   }
 
   async getPoints() {
-    const res = await fetch(apiRoutes.poits, {
+    const res = await fetch(apiRoutes.points, {
       method: "GET",
       credentials: "include",
     });
@@ -135,6 +135,27 @@ class API {
       value: {
         items: data.map(({ address, _id }) => ({ address, _id })),
       },
+    };
+  }
+
+  async getPoint(pointId) {
+    const url = this._insertParam(apiRoutes.point, {
+      path: { pointId },
+    });
+    const res = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      return { status: "error" };
+    }
+
+    const data = await res.json();
+
+    return {
+      status: "success",
+      value: data,
     };
   }
 

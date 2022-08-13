@@ -22,8 +22,16 @@ async function getOrders() {
     return;
   }
 
-  const promises = res.value.items.map(({ bikeId, _id: orderId }) =>
-    getBikeById(bikeId, orderId)
+  const promises = res.value.items.map(
+    async ({ bikeId, _id: orderId, pointId }) => {
+      const order = await getBikeById(bikeId, orderId);
+      const { address, coordinates } = await getPointById(pointId);
+      return {
+        ...order,
+        address,
+        coordinates,
+      };
+    }
   );
 
   return Promise.all(promises);
@@ -41,6 +49,17 @@ async function getBikeById(bikeId, orderId) {
     ...res.value,
     orderId,
   };
+}
+
+async function getPointById(pointId) {
+  const res = await api.getPoint(pointId);
+
+  if (res.status === "error") {
+    alert("Ошибка загрузки точки проката");
+    return {};
+  }
+
+  return res.value;
 }
 
 function renderOrders(orders) {
