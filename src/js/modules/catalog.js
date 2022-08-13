@@ -2,9 +2,11 @@ import { api } from "../api";
 import { app } from "../app";
 
 import {
+  fillDefaultFieldBikeModal,
   getDeclensionWord,
   getUpdatedQuery,
   getValueFromQuery,
+  openModalBikeRented,
 } from "../helpers";
 
 const pointIdQueryName = "pointId";
@@ -212,15 +214,6 @@ function handleBikeClick(bike) {
   openModalBikeFree(bike);
 }
 
-export function openModalBikeRented(bike) {
-  const modalId = "template-modal-bike-rented";
-  const template = document.getElementById(modalId);
-
-  fillDefaultFieldBikeModal(template, bike);
-
-  app.openModal(modalId);
-}
-
 function openModalBikeFree(bike) {
   const modalId = "template-modal-bike";
   const template = document.getElementById(modalId);
@@ -244,14 +237,4 @@ async function handleBikeRentClick(bikeId) {
   }
 
   document.location.href = "/booking.html";
-}
-
-function fillDefaultFieldBikeModal(modal, bike) {
-  const imageSRC = api.getBikeImagePath(bike._id);
-
-  modal.querySelector('[data-field="bike-name"]').textContent = bike.name;
-  modal.querySelector(
-    '[data-field="bike-cost"]'
-  ).textContent = `${bike.cost} ₽/час`;
-  modal.querySelector('[data-field="bike-img"]').setAttribute("src", imageSRC);
 }

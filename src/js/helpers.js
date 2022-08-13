@@ -1,4 +1,5 @@
 import { app } from "./app";
+import { api } from "./api";
 
 export function getDeclensionWord(value, declensions) {
   let count = value % 100;
@@ -38,4 +39,23 @@ export function showAuthorizedUserPanel(login) {
 
 export function hideUnauthorizedUserPanel() {
   app.hideElement("user-panel-unauthorized");
+}
+
+export function fillDefaultFieldBikeModal(modal, bike) {
+  const imageSRC = api.getBikeImagePath(bike._id);
+
+  modal.querySelector('[data-field="bike-name"]').textContent = bike.name;
+  modal.querySelector(
+    '[data-field="bike-cost"]'
+  ).textContent = `${bike.cost} ₽/час`;
+  modal.querySelector('[data-field="bike-img"]').setAttribute("src", imageSRC);
+}
+
+export function openModalBikeRented(bike) {
+  const modalId = "template-modal-bike-rented";
+  const template = document.getElementById(modalId);
+
+  fillDefaultFieldBikeModal(template, bike);
+
+  app.openModal(modalId);
 }

@@ -1,6 +1,6 @@
 import { api } from "../api";
 import { app } from "../app";
-import { openModalBikeRented } from "./catalog";
+import { openModalBikeRented } from "../helpers";
 
 document.addEventListener("DOMContentLoaded", () => {
   app.eventSubscribers.push({
