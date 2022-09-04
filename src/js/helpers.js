@@ -1,6 +1,13 @@
 import { app } from "./app";
 import { api } from "./api";
 
+/**
+ * Метод для склонений числительных словоформ.
+ *
+ * @param value Число.
+ * @param declensions Набор словоформ (1 - велосипед, 2-4 велосипеда, 5 - велосипедов).
+ * @returns {string}
+ */
 export function getDeclensionWord(value, declensions) {
   let count = value % 100;
   if (count >= 5 && count <= 20) {
@@ -18,10 +25,24 @@ export function getDeclensionWord(value, declensions) {
   return declensions["5"];
 }
 
+/**
+ * Достаёт значение параметра из query к странице.
+ *
+ * @param name Ключ параметра.
+ * @returns {string}
+ */
 export function getValueFromQuery(name) {
   return new URLSearchParams(document.location.search).get(name);
 }
 
+/**
+ * Добавляет пару ключ-значение в query.
+ *
+ * @param query Текущее состояние.
+ * @param name Новый ключ.
+ * @param value Новое значение.
+ * @returns {string}
+ */
 export function getUpdatedQuery(query, { name, value }) {
   const newQuery = new URLSearchParams(query);
   newQuery.set(name, value);
@@ -41,37 +62,49 @@ export function hideUnauthorizedUserPanel() {
   app.hideElement("user-panel-unauthorized");
 }
 
+/**
+ * Метод для заполнения модального окна данными актуального велосипеда.
+ *
+ * @param modal Целевое модальное окно.
+ * @param bike Данные о велосипеде.
+ */
 export function fillDefaultFieldBikeModal(modal, bike) {
-  const imageSRC = api.getBikeImagePath(bike._id);
-
-  modal.querySelector('[data-field="bike-name"]').textContent = bike.name;
-  modal.querySelector(
-    '[data-field="bike-cost"]'
-  ).textContent = `${bike.cost} ₽/час`;
-  modal.querySelector('[data-field="bike-img"]').setAttribute("src", imageSRC);
+  /**
+   * @todo к практике "Document Object Model"
+   * - [ ] Нужно взять название, стоимость за час, путь к изображению из данных о велосипеде
+   * и заполнить соответствующие DOM узлы в целевом модальном окне.
+   */
 }
 
+/**
+ * Инициализация интерактивной карты (Яндекс).
+ *
+ * @param bike Данные о велосипеде.
+ */
 function initMap(bike) {
-  const map = new ymaps.Map("map", {
-    center: [54.983358, 82.967614],
-    zoom: 11,
-  });
-  if (bike.coordinates) {
-    const placemark = new ymaps.Placemark(bike.coordinates, {
-      balloonContent: bike.address,
-    });
-    map.geoObjects.add(placemark);
-    map.setBounds(map.geoObjects.getBounds(), { checkZoomRange: true });
-  }
+  /**
+   * @todo к практике "Document Object Model"
+   * - [ ] Нужно отрисовать в контейнер #map новый объект карты;
+   * - [ ] На созданную карту добавить ymaps.Placemark с данными о пункте выдачи;
+   * - [ ] Т.к. точка на карте может оказаться за пределами текущего положения, нужно
+   * получив методом getBounds данные об актуальных границах сразу применить их к карте - setBounds.
+   *
+   * Пригодится актуальная документация:
+   * https://yandex.ru/dev/maps/jsapi/doc/2.1/quick-start/index.html?from=jsapi
+   */
 }
 
+/**
+ * Метод для отображения забронированного велосипеда.
+ *
+ * @param bike Данные о велосипеде.
+ */
 export function openModalBikeRented(bike) {
-  const modalId = "template-modal-bike-rented";
-  const template = document.getElementById(modalId);
-
-  fillDefaultFieldBikeModal(template, bike);
-
-  ymaps.ready(() => initMap(bike));
-
-  app.openModal(modalId);
+  /**
+   * @todo к практике "Document Object Model"
+   * - [ ] Необходимо взять шаблон #template-modal-bike-rented
+   * - [ ] Для наполнения данными можем использовать fillDefaultFieldBikeModal
+   * - [ ] Нужно по событию ymaps.ready вызвать initMap
+   * - [ ] Для отображения модального окна пригодится метод app.openModal
+   */
 }

@@ -67,6 +67,11 @@ class App {
       .addEventListener("click", () => this.hideElement(modal));
   }
 
+  /**
+   * Метод-хэлпер для скрытия DOM узла на странице.
+   *
+   * @param element Ссылка на DOM узел или строка-селектор.
+   */
   hideElement(element) {
     if (typeof element === "string") {
       element = document.getElementById(element);
@@ -75,6 +80,11 @@ class App {
     element.classList.add("hidden");
   }
 
+  /**
+   * Метод-хэлпер для отображения DOM узла на странице.
+   *
+   * @param element Ссылка на DOM узел или строка-селектор.
+   */
   showElement(element) {
     if (typeof element === "string") {
       element = document.getElementById(element);
