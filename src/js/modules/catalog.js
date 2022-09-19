@@ -51,11 +51,12 @@ async function init() {
  * @param currentPointId Идентификатор точки проката.
  */
 async function renderTabs(currentPointId) {
-  /**
-   * @todo к практике "Взаимодействие с сервером"
-   * - [ ] Надо получить данные из метода api.getPoints
-   * - [ ] Обработать возможные ошибки (показать сообщение)
-   */
+  const points = await api.getPoints();
+
+  if (points.status === "error") {
+    alert("Ошибка загрузки точек проката");
+    return;
+  }
 
   /**
    * @todo к практике "Document Object Model"
@@ -191,11 +192,15 @@ function setBikesCount(count) {
 }
 
 async function getCatalogItem({ currentPage, pointId }) {
-  /**
-   * @todo к практике "Взаимодействие с сервером"
-   * - [ ] Надо получить данные о велосипедах из метода api.getBikes
-   * - [ ] Обработать возможные ошибки (показать сообщение)
-   */
+  const res = await api.getBikes({
+    pointId: pointId,
+    page: currentPage,
+  });
+
+  if (res.status === "error") {
+    alert("Ошибка загрузки каталога");
+    return;
+  }
 }
 
 /**
@@ -261,10 +266,12 @@ function openModalBikeFree(bike) {
  * @param bikeId Идентификатор велосипеда.
  */
 async function handleBikeRentClick(bikeId) {
-  /**
-   * @todo к практике "Взаимодействие с сервером"
-   * - [ ] Нужно вызвать метод api.pushOrder
-   * - [ ] Обработать возможные ошибки (показать сообщение)
-   * - [ ] В случае успеха, можно переадресовать на страничку booking.html
-   */
+  const res = await api.pushOrder(bikeId);
+
+  if (res.status === "error") {
+    alert("Ошибка аренды велосипеда");
+    return;
+  }
+
+  document.location.href = "/booking.html";
 }
