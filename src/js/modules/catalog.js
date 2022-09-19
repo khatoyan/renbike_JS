@@ -17,6 +17,7 @@ const bikeDeclension = {
   5: "велосипедов",
 };
 
+/** Ожидаем данных об учётной записи, загружаем данные о велосипедах. */
 document.addEventListener("DOMContentLoaded", () => {
   app.eventSubscribers.push({
     eventName: "initedAuthorizedUser",
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+/** Загрузка данных приложения, необходимых на странице каталога. */
 async function init() {
   const pointId = getValueFromQuery(pointIdQueryName) || "";
   const currentPage = getValueFromQuery(pageQueryName) || 1;
@@ -43,8 +45,12 @@ async function init() {
   renderCatalog(bikes);
 }
 
+/**
+ * Отрисовка табов-фильтров по пунктам проката.
+ *
+ * @param currentPointId Идентификатор точки проката.
+ */
 async function renderTabs(currentPointId) {
-  const container = document.getElementById("pointsTabs");
   const points = await api.getPoints();
 
   if (points.status === "error") {
@@ -52,35 +58,38 @@ async function renderTabs(currentPointId) {
     return;
   }
 
-  points.value.items.forEach((el) => {
-    container.append(
-      getPointElementLink({ ...el, isActive: currentPointId === el._id })
-    );
-  });
-
-  container.append(
-    getPointElementLink({
-      _id: "",
-      address: "Все пункты",
-      isActive: !currentPointId,
-    })
-  );
+  /**
+   * @todo к практике "Document Object Model"
+   * - [ ] Нужно в контейнер #pointsTabs отрисовать данные, полученные от сервера
+   * - [ ] Каждый отдельный пункт рисует метод getPointElementLink
+   * - [ ] В конце списка должен быть вариант "Все пункты" с пустым id
+   */
 }
 
+/**
+ * Рисует пункт проката для табов-фильтров.
+ *
+ * @param address Адрес пункта проката.
+ * @param _id Идентификатор.
+ * @param isActive Признак активности.
+ * @returns {HTMLAnchorElement}
+ */
 function getPointElementLink({ address, _id, isActive }) {
-  const link = document.createElement("a");
-
-  link.setAttribute("href", getPointLink(_id));
-  link.classList.add("tabs__link");
-  link.textContent = address;
-
-  if (isActive) {
-    link.classList.add("tabs__link--active");
-  }
-
-  return link;
+  /**
+   * @todo к практике "Document Object Model"
+   * - [ ] Нужно создать новый DOM-узел вида HTMLAnchorElement
+   * - [ ] Адрес выведем в тело ссылки
+   * - [ ] Путь возьмем из метода getPointLink
+   * - [ ] В зависимости от флага isActive выставим актуальные CSS классы
+   */
 }
 
+/**
+ * Метод для получения актуальной ссылки на каталог, отфильтрованный по пункту проката.
+ *
+ * @param pointId Идентификатор пункта проката.
+ * @returns {string}
+ */
 function getPointLink(pointId) {
   const queryWithPointId = getUpdatedQuery(document.location.search, {
     name: pointIdQueryName,
@@ -95,6 +104,12 @@ function getPointLink(pointId) {
   return `${document.location.pathname}?${newQuery}`;
 }
 
+/**
+ * Метод рисует блок постраничной навигации для списка велосипедов.
+ *
+ * @param currentPage Текущая страница.
+ * @param totalPages Общее количество страниц.
+ */
 function renderPagination({ currentPage, totalPages }) {
   const container = document.getElementById("pagination");
 
@@ -117,20 +132,29 @@ function renderPagination({ currentPage, totalPages }) {
   }
 }
 
+/**
+ * Метод рисует ссылку на очередную страницу списка.
+ *
+ * @param pageNumber Номер страницы.
+ * @param isActive Признак активности пункта.
+ * @returns {HTMLAnchorElement}
+ */
 function getPaginationElementLink({ pageNumber, isActive }) {
-  const link = document.createElement("a");
-
-  link.setAttribute("href", getPaginationLink(pageNumber));
-  link.classList.add("pagination__link");
-  link.textContent = pageNumber;
-
-  if (isActive) {
-    link.classList.add("pagination__link--active");
-  }
-
-  return link;
+  /**
+   * @todo к практике "Document Object Model"
+   * - [ ] Нужно создать новый DOM-узел вида HTMLAnchorElement
+   * - [ ] Номер страницы выведем в тело ссылки
+   * - [ ] Путь возьмем из метода getPaginationLink
+   * - [ ] В зависимости от флага isActive выставим актуальные CSS классы
+   */
 }
 
+/**
+ * Метод формирует ссылку на очередную страницу списка.
+ *
+ * @param pageNumber Номер страницы.
+ * @returns {string}
+ */
 function getPaginationLink(pageNumber) {
   const query = getUpdatedQuery(document.location.search, {
     name: pageQueryName,
@@ -140,6 +164,12 @@ function getPaginationLink(pageNumber) {
   return `${document.location.pathname}?${query}`;
 }
 
+/**
+ * Метод формирует ссылку на следующую страницу списка.
+ *
+ * @param pageNumber Номер страницы.
+ * @returns {HTMLAnchorElement}
+ */
 function getPaginationNextButton(pageNumber) {
   const link = document.createElement("a");
 
@@ -150,6 +180,11 @@ function getPaginationNextButton(pageNumber) {
   return link;
 }
 
+/**
+ * Метод рисует актуальное количество велоспедов.
+ *
+ * @param count Количество.
+ */
 function setBikesCount(count) {
   document.getElementById(
     "bikes-count"
@@ -166,10 +201,13 @@ async function getCatalogItem({ currentPage, pointId }) {
     alert("Ошибка загрузки каталога");
     return;
   }
-
-  return res.value;
 }
 
+/**
+ * Рисует список карточек велосипедов.
+ *
+ * @param bikes Массив с данными о велосипедах.
+ */
 function renderCatalog(bikes) {
   const catalog = document.getElementById("catalog");
 
@@ -178,56 +216,55 @@ function renderCatalog(bikes) {
   });
 }
 
+/**
+ * Рисует одну карточку велосипеда.
+ *
+ * @param bike Данные о велосипеде.
+ * @returns {Node}
+ */
 function getBikeCard(bike) {
-  const template = document
-    .getElementById("bike-template-card")
-    .cloneNode(true);
-
-  const imageSRC = api.getBikeImagePath(bike._id);
-
-  template.querySelector('[data-field="bike-name"]').textContent = bike.name;
-  template.querySelector(
-    '[data-field="bike-cost"]'
-  ).textContent = `${bike.cost} ₽/час`;
-
-  template
-    .querySelector('[data-field="bike-img"]')
-    .setAttribute("src", imageSRC);
-
-  template
-    .querySelectorAll('[data-field="bike-order-btn"]')
-    .forEach((element) => {
-      element.addEventListener("click", () => handleBikeClick(bike));
-    });
-
-  app.showElement(template);
-
-  return template;
+  /**
+   * @todo к практике "Document Object Model"
+   * - [ ] Необходимо взять шаблон #bike-template-card
+   * - [ ] Можно делать копию DOM узла с помощью нативного метода cloneNode
+   * - [ ] Данные из объекта bike нужно вписать в узлы DOM, для поиска удобно использовать data-атрибуты
+   * - [ ] Шаблон по-умолчанию скрыт средствами CSS, здесь пригодится метод app.showElement
+   * - [ ] На клик по карточке надо подписать handleBikeClick
+   */
 }
 
+/**
+ * Обработчик клика по карточке велосипеда.
+ *
+ * @param bike Данные о велосипеде.
+ */
 function handleBikeClick(bike) {
-  if (bike.isRented) {
-    openModalBikeRented(bike);
-    return;
-  }
-
-  openModalBikeFree(bike);
+  /**
+   * @todo к практике "Document Object Model"
+   * - [ ] В зависимости от состояния флага `rented` в данных о велосипеде надо отобразить актуальное модальное окно
+   */
 }
 
+/**
+ * Метод для отображения свободного (доступного к аренде) велосипеда.
+ *
+ * @param bike Данные о велосипеде.
+ */
 function openModalBikeFree(bike) {
-  const modalId = "template-modal-bike";
-  const template = document.getElementById(modalId);
-
-  fillDefaultFieldBikeModal(template, bike);
-  template
-    .querySelector('[data-control="bike-rent"]')
-    .addEventListener("click", () => {
-      handleBikeRentClick(bike._id);
-    });
-
-  app.openModal(modalId);
+  /**
+   * @todo к практике "Document Object Model"
+   * - [ ] Необходимо взять шаблон #template-modal-bike
+   * - [ ] Для наполнения данными можем использовать fillDefaultFieldBikeModal
+   * - [ ] Клик по кнопке бронирования надо подписать на handleBikeRentClick
+   * - [ ] Для отображения модального окна пригодится метод app.openModal
+   */
 }
 
+/**
+ * Обработка клика по кнопке бронирования.
+ *
+ * @param bikeId Идентификатор велосипеда.
+ */
 async function handleBikeRentClick(bikeId) {
   const res = await api.pushOrder(bikeId);
 
