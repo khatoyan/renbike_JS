@@ -1,5 +1,6 @@
 import { apiRoutes } from "./api.routes";
 
+/** Основной интерфейс взаимодействия с сервером. */
 class API {
   _insertParam(pathname, config) {
     if (!config) {
@@ -159,64 +160,49 @@ class API {
     };
   }
 
+  /**
+   * Создание бронирования.
+   *
+   * @param bikeId Идентификатор велосипеда.
+   */
   async pushOrder(bikeId) {
-    const body = JSON.stringify({ bikeId });
-
-    const res = await fetch(apiRoutes.order, {
-      body,
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (!res.ok) {
-      return { status: "error" };
-    }
-
+    /**
+     * @todo к практике "Взаимодействие с сервером".
+     * - [ ] Необходимо отправить POST запрос на apiRoutes.order, в качестве тела запроса отправить {bikeId}
+     * - [ ] На выходе вернуть объект формата {status: "success" | "error"}
+     */
     return {
-      status: "success",
+      status: "error"
     };
   }
 
+  /** Загрузка списка бронирований. */
   async getOrders() {
-    const res = await fetch(apiRoutes.order, {
-      method: "GET",
-      credentials: "include",
-    });
-
-    if (!res.ok) {
-      return { status: "error" };
-    }
-
-    const data = await res.json();
-
+    /**
+     * @todo к практике "Взаимодействие с сервером".
+     * - [ ] Необходимо отправить GET запрос на apiRoutes.order, в ответ ожидать json
+     * - [ ] На выходе вернуть объект формата {status: "success" | "error", value: {items: [...]}}
+     */
     return {
-      status: "success",
-      value: {
-        items: data,
-      },
+      status: "error"
     };
   }
 
+  /**
+   * Загрузка информации о конкретном велосипеде.
+   *
+   * @param bikeId Идентификатор велосипеда.
+   */
   async getBike(bikeId) {
-    const url = this._insertParam(apiRoutes.bike, {
-      path: { bikeId },
-    });
-
-    const res = await fetch(url, {
-      method: "GET",
-      credentials: "include",
-    });
-
-    if (!res.ok) {
-      return { status: "error" };
-    }
-
-    const data = await res.json();
-
+    /**
+     * @todo к практике "Взаимодействие с сервером".
+     * - [ ] Необходимо отправить GET запрос на apiRoutes.bike, в ответ ожидать json
+     * Здесь может пригодиться метод this._insertParam для подстановки иденитфикатора в url
+     *
+     * - [ ] На выходе вернуть объект формата {status: "success" | "error", value: {...}}
+     */
     return {
-      status: "success",
-      value: data,
+      status: "error"
     };
   }
 }

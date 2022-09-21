@@ -266,12 +266,11 @@ function openModalBikeFree(bike) {
  * @param bikeId Идентификатор велосипеда.
  */
 async function handleBikeRentClick(bikeId) {
-  const res = await api.pushOrder(bikeId);
-
-  if (res.status === "error") {
-    alert("Ошибка аренды велосипеда");
-    return;
-  }
-
-  document.location.href = "/booking.html";
+  /**
+   * @todo к практике "Взаимодействие с сервером".
+   * - [ ] Необходимо вызвать метод api.pushOrder
+   * - [ ] В случае получения success статуса перенаправить пользователя на страницу /booking.html
+   * - [ ] В случае получения error статуса - показать сообщение об ошибке
+   */
+  alert("TODO не реализовано");
 }
