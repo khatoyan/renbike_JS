@@ -21,16 +21,16 @@
     </div>
     <div class="settings__row">
       <form class="settings__row-content settings__row-content--edit" id="password-edit">
-        <label class="settings__label" for="new-pass">Новый пароль</label>
+        <label class="settings__label" for="settings-new-pass">Новый пароль</label>
         <div class="settings__form-row">
-          <input type="password" class="input" required name="new-pass">
+          <input id="settings-new-pass" type="password" class="input" required name="new-pass" autocomplete="new-password">
         </div>
         <div class="settings__form-row settings__form-row--tip">
           Минимум 8 символов
         </div>
         <label class="settings__label" for="settings-repeat-pass">Повторите пароль</label>
         <div class="settings__form-row">
-          <input type="password" class="input" required id="settings-repeat-pass">
+          <input type="password" class="input" required id="settings-repeat-pass" autocomplete="new-password">
         </div>
         <div class="settings__form-row">
           <button type="submit" class="button">Изменить</button>
