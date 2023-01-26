@@ -608,7 +608,7 @@ input:checked + .catalog-header__switch {
 .pagination__next {
   margin-left: calc(var(--m) * 2);
   padding-right: calc(var(--m) * 2);
-  background: url(../../project/images/next.svg) 100% 50% no-repeat;
+  background: url(../images/next.svg) 100% 50% no-repeat;
 }
 
 /* form */
