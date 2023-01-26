@@ -201,6 +201,8 @@ async function getCatalogItem({ currentPage, pointId }) {
     alert("Ошибка загрузки каталога");
     return;
   }
+
+  return res.value;
 }
 
 /**
