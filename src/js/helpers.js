@@ -8,6 +8,7 @@ import { api } from "./api";
  * @param declensions Набор словоформ (1 - велосипед, 2-4 велосипеда, 5 - велосипедов).
  * @returns {string}
  */
+
 export function getDeclensionWord(value, declensions) {
   let count = value % 100;
   if (count >= 5 && count <= 20) {
@@ -68,7 +69,16 @@ export function hideUnauthorizedUserPanel() {
  * @param modal Целевое модальное окно.
  * @param bike Данные о велосипеде.
  */
-export function fillDefaultFieldBikeModal(modal, bike) {
+export function fillDefaultFieldBikeModal(bikeModal, bike) {
+
+  const bikeImage = bikeModal.querySelector("[data-field=bike-img]");
+  const bikeName = bikeModal.querySelector("[data-field=bike-name]");
+  const bikeCost = bikeModal.querySelector("[data-field=bike-cost]");
+
+  bikeName.textContent = bike.name;
+  bikeImage.src = api.getBikeImagePath(bike._id);
+  bikeCost.textContent = `${bike.cost} р/мин`;
+
   /**
    * @todo к практике "Document Object Model"
    * - [ ] Нужно взять название, стоимость за час, путь к изображению из данных о велосипеде
@@ -82,6 +92,7 @@ export function fillDefaultFieldBikeModal(modal, bike) {
  * @param bike Данные о велосипеде.
  */
 function initMap(bike) {
+
   /**
    * @todo к практике "Document Object Model"
    * - [ ] Нужно отрисовать в контейнер #map новый объект карты;
@@ -100,6 +111,13 @@ function initMap(bike) {
  * @param bike Данные о велосипеде.
  */
 export function openModalBikeRented(bike) {
+
+  const rentedBikeModal = document.getElementById('template-modal-bike-rented');
+
+  fillDefaultFieldBikeModal(rentedBikeModal, bike);
+  ymaps.ready(initMap())
+  app.openModal('template-modal-bike-rented');
+
   /**
    * @todo к практике "Document Object Model"
    * - [ ] Необходимо взять шаблон #template-modal-bike-rented
