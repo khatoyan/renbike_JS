@@ -52,16 +52,17 @@ async function init() {
  */
 async function renderTabs(currentPointId) {
   const points = await api.getPoints();
-  const tabs = document.getElementById("pointsTabs");
 
   if (points.status === "error") {
     alert("Ошибка загрузки точек проката");
     return;
   }
 
+  const tabs = document.getElementById("pointsTabs");
+
   for (const item of points.value.items) {
     item.isActive = item._id === currentPointId;
-    tabs.appendChild(getPointElementLink(item))
+    tabs.appendChild(getPointElementLink(item));
   }
 
   const epmtyPoint = getPointElementLink({ address: "Все пункты", _id: "", isActive: currentPointId === "" });
@@ -89,7 +90,7 @@ function getPointElementLink(point) {
 
   link.textContent = point.address;
   link.href = getPointLink(point._id);
-  link.classList.add("tabs__link")
+  link.classList.add("tabs__link");
 
   if (point.isActive) {
     link.classList.add('tabs__link--active');
@@ -339,8 +340,6 @@ function openModalBikeFree(bike) {
  * @param bikeId Идентификатор велосипеда.
  */
 async function handleBikeRentClick(bikeId) {
-
-  console.log('handleBikeRentClick');
   /**
    * @todo к практике "Взаимодействие с сервером".
    * - [ ] Необходимо вызвать метод api.pushOrder
