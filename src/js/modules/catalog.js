@@ -298,7 +298,7 @@ function getBikeCard(bike) {
 function handleBikeClick(bike) {
 
   if (bike.isBooked) {
-    console.log("function does not exist yet")
+    openModalBikeRented(bike);
   } else {
     openModalBikeFree(bike);
   }
