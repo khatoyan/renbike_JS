@@ -39,7 +39,7 @@ async function init() {
     currentPage,
   });
 
-  renderTabs(pointId);
+  renderTabs(pointId);  
   renderPagination({ totalPages, currentPage });
   setBikesCount(bikesCount);
   renderCatalog(bikes);
@@ -58,6 +58,16 @@ async function renderTabs(currentPointId) {
     return;
   }
 
+  const tabs = document.getElementById("pointsTabs");
+
+  for (const item of points.value.items) {
+    item.isActive = item._id === currentPointId;
+    tabs.appendChild(getPointElementLink(item));
+  }
+
+  const epmtyPoint = getPointElementLink({ address: "Все пункты", _id: "", isActive: currentPointId === "" });
+  tabs.appendChild(epmtyPoint);
+  
   /**
    * @todo к практике "Document Object Model"
    * - [ ] Нужно в контейнер #pointsTabs отрисовать данные, полученные от сервера
@@ -74,7 +84,19 @@ async function renderTabs(currentPointId) {
  * @param isActive Признак активности.
  * @returns {HTMLAnchorElement}
  */
-function getPointElementLink({ address, _id, isActive }) {
+function getPointElementLink(point) {
+
+  const link = document.createElement('a');
+
+  link.textContent = point.address;
+  link.href = getPointLink(point._id);
+  link.classList.add("tabs__link");
+
+  if (point.isActive) {
+    link.classList.add('tabs__link--active');
+  }
+
+  return link;
   /**
    * @todo к практике "Document Object Model"
    * - [ ] Нужно создать новый DOM-узел вида HTMLAnchorElement
@@ -139,8 +161,22 @@ function renderPagination({ currentPage, totalPages }) {
  * @param isActive Признак активности пункта.
  * @returns {HTMLAnchorElement}
  */
-function getPaginationElementLink({ pageNumber, isActive }) {
+function getPaginationElementLink(obj) {
+
+  const pagLink = document.createElement('a');
+
+  pagLink.textContent = obj.pageNumber;
+  pagLink.href = getPaginationLink(obj.pageNumber);
+
+  pagLink.classList.add("pagination__link")
+
+  if (obj.isActive) {
+    pagLink.classList.add("pagination__link--active")
+  }
+
+  return pagLink;
   /**
+   * 
    * @todo к практике "Document Object Model"
    * - [ ] Нужно создать новый DOM-узел вида HTMLAnchorElement
    * - [ ] Номер страницы выведем в тело ссылки
@@ -225,6 +261,25 @@ function renderCatalog(bikes) {
  * @returns {Node}
  */
 function getBikeCard(bike) {
+
+  const template = document.getElementById("bike-template-card");
+  const bikeCard = template.cloneNode(true)
+  bikeCard.classList.remove("hidden")
+
+  const bikeImage = bikeCard.querySelector("[data-field=bike-img]");
+  const bikeName = bikeCard.querySelector("[data-field=bike-name]");
+  const bikeCost = bikeCard.querySelector("[data-field=bike-cost]");
+
+  bikeName.textContent = bike.name;
+  bikeImage.src = api.getBikeImagePath(bike._id);
+  bikeCost.textContent = `${bike.cost} р/мин`;
+
+  bikeCard.addEventListener('click', () => handleBikeClick(bike))
+
+  /* cost, name, image, _id, isBooked*/
+
+  return bikeCard;
+
   /**
    * @todo к практике "Document Object Model"
    * - [ ] Необходимо взять шаблон #bike-template-card
@@ -241,9 +296,16 @@ function getBikeCard(bike) {
  * @param bike Данные о велосипеде.
  */
 function handleBikeClick(bike) {
+
+  if (bike.isBooked) {
+    openModalBikeRented(bike);
+  } else {
+    openModalBikeFree(bike);
+  }
+
   /**
    * @todo к практике "Document Object Model"
-   * - [ ] В зависимости от состояния флага `rented` в данных о велосипеде надо отобразить актуальное модальное окно
+   * - [ ] В зависимости от состояния флага `isBooked` в данных о велосипеде надо отобразить актуальное модальное окно
    */
 }
 
@@ -253,6 +315,16 @@ function handleBikeClick(bike) {
  * @param bike Данные о велосипеде.
  */
 function openModalBikeFree(bike) {
+
+  const bikeModal = document.getElementById('template-modal-bike');
+
+  fillDefaultFieldBikeModal(bikeModal, bike);
+
+  bikeModal.querySelector('[data-control=bike-rent]')
+    .addEventListener('click', () => handleBikeRentClick(bike._id));
+
+  app.openModal('template-modal-bike')
+
   /**
    * @todo к практике "Document Object Model"
    * - [ ] Необходимо взять шаблон #template-modal-bike
@@ -274,5 +346,5 @@ async function handleBikeRentClick(bikeId) {
    * - [ ] В случае получения success статуса перенаправить пользователя на страницу /booking.html
    * - [ ] В случае получения error статуса - показать сообщение об ошибке
    */
-  alert("TODO не реализовано");
+  //alert("TODO не реализовано");
 }
