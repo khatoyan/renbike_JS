@@ -671,3 +671,28 @@ input:checked + .catalog-header__switch {
   border-color: var(--colorTextError);
   box-shadow: 0 0 1px 1px var(--colorTextError);
 }
+
+.tool-container {
+  background: #fff;
+  position: absolute;
+  max-width: 250px;
+  border-radius: 8px;
+  border: none transparent;
+  display: flex;
+  text-align: center;
+  filter: drop-shadow(rgba(0, 0, 0, 0.08) 0px 4px 16px);
+  opacity: 1;
+  transform: translate(0px, 0px);
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.tool-container:after {
+  position: absolute;
+  content: "";
+  left: -8px;
+  filter: drop-shadow(rgba(0, 0, 0, 0.08) 0px 4px 16px);
+	border-top: 8px solid transparent;
+	border-right: 8px solid #fff;
+	border-bottom: 8px solid transparent;
+}

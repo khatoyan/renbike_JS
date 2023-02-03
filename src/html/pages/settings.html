@@ -47,12 +47,12 @@
       <form class="settings__row-content settings__row-content--edit" id="card-edit">
         <label class="settings__label" for="settings-number">Карта</label>
         <div class="settings__form-row">
-          <input type="text" class="input" placeholder="0000 0000 0000 0000" required name="number"
+          <input type="text" class="input" maxlength='16' placeholder="0000 0000 0000 0000" required name="number"
             id="settings-number">
         </div>
         <label class="settings__label" for="settings-date">Срок</label>
         <div class="settings__form-row">
-          <input type="month" class="input input--short" required name="date" id="settings-date">
+          <input type="month" class="input input--short" maxlength='7' required name="date" id="settings-date">
         </div>
         <label class="settings__label" for="settings-cvv">CVV</label>
         <div class="settings__form-row">
