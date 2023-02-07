@@ -59,17 +59,8 @@ function isValidNumber(value, countOfNumbers) {
   if (value.length < countOfNumbers) {
     return false;
   }
-    
-
-  if (countOfNumbers === 3) {
-    return /^[0-9]{3}$/.test(value);
-  } 
-
-  if (countOfNumbers === 16) {
-    return /^[0-9]{16}$/.test(value)
-  } 
-
-  return true;
+  
+  return !isNaN(value);
 }
 
 function isValidPassword(value) {
