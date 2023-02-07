@@ -3,6 +3,17 @@ const { app } = require("../app");
 
 document.addEventListener("DOMContentLoaded", init);
 
+const emailForm = document.getElementById('email-edit');
+const passwordForm = document.getElementById('password-edit');
+const cardForm = document.getElementById('card-edit');
+
+const emailInput = document.getElementById('settings-email');    
+const cardNumbInput = document.getElementById('settings-number');  
+const cardCVCInput = document.getElementById('settings-cvv');  
+const passInput = document.getElementById('settings-new-pass'); 
+const repPassInput = document.getElementById('settings-repeat-pass'); 
+
+
 async function init() {
   app.eventSubscribers.push({
     eventName: "initedAuthorizedUser",
@@ -40,7 +51,7 @@ function getCardNumberWithMask(number) {
 }
 
 function isValidEmail(value) {
-  return value.includes('@');
+  return /^[A-Z0-9]+@[A-Z0-9]+.[A-Z]{2,4}$/i.test(value);
 }
 
 function isValidNumber(value, countOfNumbers) {
@@ -55,38 +66,27 @@ function isValidNumber(value, countOfNumbers) {
   } 
 
   if (countOfNumbers === 16) {
-    return /^[1-9]{1}[0-9]{15}$/.test(value)
+    return /^[0-9]{16}$/.test(value)
   } 
 
   return true;
 }
 
-function isValidPassword(e) {
-  return (e.length >= 6)
+function isValidPassword(value) {
+  return (value.length >= 6)
 }
-
-function getCoords(elem) {
-  let box = elem.getBoundingClientRect();
-
-  return {
-    top: box.top + window.pageYOffset,
-    right: box.right + window.pageXOffset,
-    bottom: box.bottom + window.pageYOffset,
-    left: box.left + window.pageXOffset
-  };
-}
-
-
 
 function renderToolTip(elem, errorText) {
 
-  const coords = getCoords(elem);
+  const coords = elem.getBoundingClientRect();
   const toolContainer = document.createElement('div');
-  const toolText = document.createElement('p')
+  const toolText = document.createElement('p');
 
   toolContainer.classList.add('tool-container');
   toolText.classList.add('tool-text');
   toolText.textContent = errorText;
+
+  elem.classList.add('wrondInput');
 
   toolContainer.style.left = coords.right + 'px';
   toolContainer.style.top = coords.top + 'px';
@@ -95,22 +95,46 @@ function renderToolTip(elem, errorText) {
   toolContainer.appendChild(toolText);
   document.body.appendChild(toolContainer);
 
-  setTimeout(() => {
-    toolContainer.style.visibility = 'hidden'
-  }, 2000)
+  elem.addEventListener('focus', () => {
+    elem.classList.remove('wrondInput');
+    toolContainer.remove();
+  });
+
+  elem.parentNode.addEventListener('submit', () =>  {
+    toolContainer.remove()
+    elem.classList.remove('wrondInput');
+  });
 }
 
-function cardFormValidator(cardForm) {
-  const cardInputs = cardForm.querySelectorAll('input');
+function isCardFormValid(cardForm) {
 
-  for (item of cardInputs) {
-    console.log(item.value)
-    const check = isValidNumber(item.value, +(item.getAttribute('maxlength')))
-
-    if (!check || item.value === '') {
-      renderToolTip(item, 'Неверно заполнены данные карты');
+  cardForm.forEach(item => {
+    if (typeof item === 'input' && item.value === '') {
+      renderToolTip(item, 'Заполните все данные');
       return false;
     }
+  });
+
+  const cardNumber = cardForm
+    .querySelector('input')
+    .getElementById('settings-number');
+
+  const numberСheck = isValidNumber(cardNumber.value, +(cardNumber.getAttribute('maxlength')))
+
+  if (!numberСheck) {
+    renderToolTip(item, 'Неверно заполнен номер карты');
+    return false;
+  }
+
+  const cardCVC = cardForm
+    .querySelector('input')
+    .getElementById('settings-cvc');
+
+  const checkCVC = isValidNumber(cardCVC.value, +(cardCVC.getAttribute('maxlength')))
+
+  if (!checkCVC) {
+    renderToolTip(item, 'Неверно заполнен CVC код');
+    return false;
   }
 
   return true;
@@ -123,24 +147,14 @@ function initListeners() {
      * - [ ] Для форм редактирования email, пароля и карты оплаты на событие onSubmit привязать
      * соответствующие обработчики;
      * - [ ] Реализовать валидацию полей форм по гайдам: https://guides.kontur.ru/principles/validation/
-     */
-
-    const emailForm = document.getElementById('email-edit');
-    const passwordForm = document.getElementById('password-edit');
-    const cardForm = document.getElementById('card-edit');
-
-    const emailInput = document.getElementById('settings-email');    
-    const cardNumbInput = document.getElementById('settings-number');  
-    const cardCVCInput = document.getElementById('settings-cvv');  
-    const passInput = document.getElementById('settings-new-pass'); 
-    const repPassInput = document.getElementById('settings-repeat-pass');  
+     */ 
 
     emailForm.addEventListener('submit', (e) => handleEmailEditSubmit(e));
     passwordForm.addEventListener('submit', (e) => handlePasswordEditSubmit(e));
     cardForm.addEventListener('submit', (e) => handleCardEditSubmit(e));
 
     emailInput.addEventListener('blur', (e) => {
-      if (!isValidEmail(e)) {
+      if (!isValidEmail(e.target.value)) {
         renderToolTip(e.target, 'Неверное значение email')
         return;
       }
@@ -154,21 +168,21 @@ function initListeners() {
     })
 
     cardCVCInput.addEventListener('blur', (e) => {
-      if (!isValidNumber(e.target.value, 16)) {
+      if (!isValidNumber(e.target.value, 3)) {
         renderToolTip(e.target, 'Неверный CVC код')
         return;
       }
     })
 
     passInput.addEventListener('blur', (e) => {
-      if (!isValidPassword(e)) {
+      if (!isValidPassword(e.target.value)) {
         renderToolTip(e.target, 'Неверный формат пароля')
         return;
       }
     })
 
     repPassInput.addEventListener('blur', (e) => {
-      if (!isValidPassword(e)) {
+      if (!isValidPassword(e.target.value)) {
         renderToolTip(e.target, 'Неверный формат пароля')
         return;
       }})
@@ -179,12 +193,12 @@ function initListeners() {
     async function handleEmailEditSubmit(e) {
         e.preventDefault();
 
-        if (!isValidEmail(e)) {
+        const email = Object.fromEntries(new FormData(e.target)).email;
+
+        if (!isValidEmail(email)) {
           renderToolTip(e.target, 'Неверное значение email')
           return;
         }
-
-        const email = Object.fromEntries(new FormData(e.target)).email;
 
         const res = await api.updateCurrentUser({
             login: email,
@@ -202,11 +216,14 @@ function initListeners() {
     /** Сохранение пароля. */
     async function handlePasswordEditSubmit(e) {
         e.preventDefault();
-        
-        if (!isValidPassword(e)) {
-          renderToolTip(e.target, 'Неверный формат пароля')
-          return;
+
+        for (item of e.target.querySelectorAll('input')) {
+          if (!isValidPassword(item.value)) {
+            renderToolTip(item, 'Неверный формат пароля')
+            return;
+          }
         }
+
         const password = Object.fromEntries(new FormData(e.target))["new-pass"];
 
         const res = await api.updateCurrentUser({
@@ -225,7 +242,7 @@ function initListeners() {
     async function handleCardEditSubmit(e) {
         e.preventDefault();
 
-        if (!cardFormValidator(e.currentTarget))
+        if (!isCardFormValid(e.currentTarget))
           return;
 
         const formData = Object.fromEntries(new FormData(e.target));
