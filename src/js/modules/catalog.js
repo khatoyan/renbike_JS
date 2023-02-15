@@ -346,5 +346,12 @@ async function handleBikeRentClick(bikeId) {
    * - [ ] В случае получения success статуса перенаправить пользователя на страницу /booking.html
    * - [ ] В случае получения error статуса - показать сообщение об ошибке
    */
-  //alert("TODO не реализовано");
+
+  const res = await api.pushOrder(bikeId);
+
+  if (res.status === 'success') {
+    document.location.href = '/booking.html';
+  } else {
+    alert("Ошибка!");
+  }
 }

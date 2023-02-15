@@ -171,8 +171,23 @@ class API {
      * - [ ] Необходимо отправить POST запрос на apiRoutes.order, в качестве тела запроса отправить {bikeId}
      * - [ ] На выходе вернуть объект формата {status: "success" | "error"}
      */
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ bikeId }),
+    }
+
+    const res = await fetch(apiRoutes.order, options);
+
+    if (!res.ok) {
+      return { status: 'error' };
+    }
+
     return {
-      status: "error"
+      status: 'success'
     };
   }
 
@@ -183,8 +198,19 @@ class API {
      * - [ ] Необходимо отправить GET запрос на apiRoutes.order, в ответ ожидать json
      * - [ ] На выходе вернуть объект формата {status: "success" | "error", value: {items: [...]}}
      */
+
+
+    const res = await fetch(apiRoutes.order);
+
+    if (!res.ok) {
+      return { status: 'error' }
+    }
+
+    const data = await res.json();
+
     return {
-      status: "error"
+      status: "success",
+      value: { items: data }
     };
   }
 
@@ -193,6 +219,7 @@ class API {
    *
    * @param bikeId Идентификатор велосипеда.
    */
+
   async getBike(bikeId) {
     /**
      * @todo к практике "Взаимодействие с сервером".
@@ -201,10 +228,25 @@ class API {
      *
      * - [ ] На выходе вернуть объект формата {status: "success" | "error", value: {...}}
      */
+
+    const url = this._insertParam(apiRoutes.bike, { path: { bikeId } });
+    
+    const res = await fetch(url);
+
+    if (!res.ok) {
+       return { status: 'error' };
+    }
+   
+    const data = await res.json();
+
     return {
-      status: "error"
-    };
+      status: 'success',
+      value: data,
+    }
   }
+
+
 }
+
 
 export const api = new API();
