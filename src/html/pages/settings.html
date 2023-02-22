@@ -6,7 +6,7 @@
       <form class="settings__row-content settings__row-content--edit" id="email-edit">
         <label class="settings__label" for="settings-email">Электронная почта</label>
         <div class="settings__form-row">
-          <input type="text" class="input" name="email" required id="settings-email">
+          <input type="text" class="input" name="email" id="settings-email">
         </div>
         <div class="settings__form-row">
           <button type="submit" class="button">Изменить</button>
@@ -16,21 +16,21 @@
         <label class="settings__label">Электронная почта</label>
         <span id="email-value"></span>
       </div>
-      <a href="#email-edit" class="settings__link">Изменить</a>
-      <a href="#" class="settings__link settings__link--cancel">Отменить</a>
+      <a href="#email-edit" class="settings__link" id="email-edit-button">Изменить</a>
+      <a href="#" class="settings__link settings__link--cancel" id="email-cancel">Отменить</a>
     </div>
     <div class="settings__row">
       <form class="settings__row-content settings__row-content--edit" id="password-edit">
         <label class="settings__label" for="settings-new-pass">Новый пароль</label>
         <div class="settings__form-row">
-          <input id="settings-new-pass" type="password" class="input" required name="new-pass" autocomplete="new-password">
+          <input id="settings-new-pass" type="password" class="input" name="new-pass" autocomplete="new-password">
         </div>
         <div class="settings__form-row settings__form-row--tip">
           Минимум 8 символов
         </div>
         <label class="settings__label" for="settings-repeat-pass">Повторите пароль</label>
         <div class="settings__form-row">
-          <input type="password" class="input" required id="settings-repeat-pass" autocomplete="new-password">
+          <input type="password" class="input" id="settings-repeat-pass" autocomplete="new-password">
         </div>
         <div class="settings__form-row">
           <button type="submit" class="button">Изменить</button>
@@ -40,23 +40,23 @@
         <label class="settings__label">Пароль</label>
         ••••••••••••
       </div>
-      <a href="#password-edit" class="settings__link">Изменить</a>
-      <a href="#" class="settings__link settings__link--cancel">Отменить</a>
+      <a href="#password-edit" class="settings__link" id="password-edit-button">Изменить</a>
+      <a href="#" class="settings__link settings__link--cancel" id="password-cancel">Отменить</a>
     </div>
     <div class="settings__row">
       <form class="settings__row-content settings__row-content--edit" id="card-edit">
         <label class="settings__label" for="settings-number">Карта</label>
         <div class="settings__form-row">
-          <input type="text" class="input" placeholder="0000 0000 0000 0000" required name="number"
+          <input type="text" class="input" placeholder="0000 0000 0000 0000" name="number"
             id="settings-number">
         </div>
         <label class="settings__label" for="settings-date">Срок</label>
         <div class="settings__form-row">
-          <input type="month" class="input input--short" required name="date" id="settings-date">
+          <input type="month" class="input input--short" name="date" id="settings-date">
         </div>
         <label class="settings__label" for="settings-cvv">CVV</label>
         <div class="settings__form-row">
-          <input type="password" class="input input--short" maxlength="3" name="cvv" required id="settings-cvv">
+          <input type="password" class="input input--short" maxlength="3" name="cvv" id="settings-cvv">
         </div>
         <div class="settings__form-row">
           <button type="submit" class="button">Изменить</button>
@@ -66,8 +66,8 @@
         <label class="settings__label">Карта</label>
         <span id="card-number-value"></span>
       </div>
-      <a href="#card-edit" class="settings__link">Изменить</a>
-      <a href="#" class="settings__link settings__link--cancel">Отменить</a>
+      <a href="#card-edit" class="settings__link" id="card-edit-button">Изменить</a>
+      <a href="#" class="settings__link settings__link--cancel" id="card-cancel">Отменить</a>
     </div>
   </section>
 
