@@ -159,6 +159,94 @@ class API {
       value: data,
     };
   }
+
+  /**
+   * Создание бронирования.
+   *
+   * @param bikeId Идентификатор велосипеда.
+   */
+  async pushOrder(bikeId) {
+    /**
+     * @todo к практике "Взаимодействие с сервером".
+     * - [ ] Необходимо отправить POST запрос на apiRoutes.order, в качестве тела запроса отправить {bikeId}
+     * - [ ] На выходе вернуть объект формата {status: "success" | "error"}
+     */
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ bikeId }),
+    }
+
+    const res = await fetch(apiRoutes.order, options);
+
+    if (!res.ok) {
+      return { status: 'error' };
+    }
+
+    return {
+      status: 'success'
+    };
+  }
+
+  /** Загрузка списка бронирований. */
+  async getOrders() {
+    /**
+     * @todo к практике "Взаимодействие с сервером".
+     * - [ ] Необходимо отправить GET запрос на apiRoutes.order, в ответ ожидать json
+     * - [ ] На выходе вернуть объект формата {status: "success" | "error", value: {items: [...]}}
+     */
+
+
+    const res = await fetch(apiRoutes.order);
+
+    if (!res.ok) {
+      return { status: 'error' }
+    }
+
+    const data = await res.json();
+
+    return {
+      status: "success",
+      value: { items: data }
+    };
+  }
+
+  /**
+   * Загрузка информации о конкретном велосипеде.
+   *
+   * @param bikeId Идентификатор велосипеда.
+   */
+
+  async getBike(bikeId) {
+    /**
+     * @todo к практике "Взаимодействие с сервером".
+     * - [ ] Необходимо отправить GET запрос на apiRoutes.bike, в ответ ожидать json
+     * Здесь может пригодиться метод this._insertParam для подстановки иденитфикатора в url
+     *
+     * - [ ] На выходе вернуть объект формата {status: "success" | "error", value: {...}}
+     */
+
+    const url = this._insertParam(apiRoutes.bike, { path: { bikeId } });
+    
+    const res = await fetch(url);
+
+    if (!res.ok) {
+       return { status: 'error' };
+    }
+   
+    const data = await res.json();
+
+    return {
+      status: 'success',
+      value: data,
+    }
+  }
+
+
 }
+
 
 export const api = new API();
