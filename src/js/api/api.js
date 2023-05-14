@@ -159,52 +159,6 @@ class API {
       value: data,
     };
   }
-
-  /**
-   * Создание бронирования.
-   *
-   * @param bikeId Идентификатор велосипеда.
-   */
-  async pushOrder(bikeId) {
-    /**
-     * @todo к практике "Взаимодействие с сервером".
-     * - [ ] Необходимо отправить POST запрос на apiRoutes.order, в качестве тела запроса отправить {bikeId}
-     * - [ ] На выходе вернуть объект формата {status: "success" | "error"}
-     */
-    return {
-      status: "error"
-    };
-  }
-
-  /** Загрузка списка бронирований. */
-  async getOrders() {
-    /**
-     * @todo к практике "Взаимодействие с сервером".
-     * - [ ] Необходимо отправить GET запрос на apiRoutes.order, в ответ ожидать json
-     * - [ ] На выходе вернуть объект формата {status: "success" | "error", value: {items: [...]}}
-     */
-    return {
-      status: "error"
-    };
-  }
-
-  /**
-   * Загрузка информации о конкретном велосипеде.
-   *
-   * @param bikeId Идентификатор велосипеда.
-   */
-  async getBike(bikeId) {
-    /**
-     * @todo к практике "Взаимодействие с сервером".
-     * - [ ] Необходимо отправить GET запрос на apiRoutes.bike, в ответ ожидать json
-     * Здесь может пригодиться метод this._insertParam для подстановки иденитфикатора в url
-     *
-     * - [ ] На выходе вернуть объект формата {status: "success" | "error", value: {...}}
-     */
-    return {
-      status: "error"
-    };
-  }
 }
 
 export const api = new API();

@@ -78,51 +78,6 @@ export function fillDefaultFieldBikeModal(bikeModal, bike) {
   bikeName.textContent = bike.name;
   bikeImage.src = api.getBikeImagePath(bike._id);
   bikeCost.textContent = `${bike.cost} р/мин`;
-
-  /**
-   * @todo к практике "Document Object Model"
-   * - [ ] Нужно взять название, стоимость за час, путь к изображению из данных о велосипеде
-   * и заполнить соответствующие DOM узлы в целевом модальном окне.
-   */
 }
 
-/**
- * Инициализация интерактивной карты (Яндекс).
- *
- * @param bike Данные о велосипеде.
- */
-function initMap(bike) {
 
-  /**
-   * @todo к практике "Document Object Model"
-   * - [ ] Нужно отрисовать в контейнер #map новый объект карты;
-   * - [ ] На созданную карту добавить ymaps.Placemark с данными о пункте выдачи;
-   * - [ ] Т.к. точка на карте может оказаться за пределами текущего положения, нужно
-   * получив методом getBounds данные об актуальных границах сразу применить их к карте - setBounds.
-   *
-   * Пригодится актуальная документация:
-   * https://yandex.ru/dev/maps/jsapi/doc/2.1/quick-start/index.html?from=jsapi
-   */
-}
-
-/**
- * Метод для отображения забронированного велосипеда.
- *
- * @param bike Данные о велосипеде.
- */
-export function openModalBikeRented(bike) {
-
-  const rentedBikeModal = document.getElementById('template-modal-bike-rented');
-
-  fillDefaultFieldBikeModal(rentedBikeModal, bike);
-  ymaps.ready(initMap())
-  app.openModal('template-modal-bike-rented');
-
-  /**
-   * @todo к практике "Document Object Model"
-   * - [ ] Необходимо взять шаблон #template-modal-bike-rented
-   * - [ ] Для наполнения данными можем использовать fillDefaultFieldBikeModal
-   * - [ ] Нужно по событию ymaps.ready вызвать initMap
-   * - [ ] Для отображения модального окна пригодится метод app.openModal
-   */
-}
